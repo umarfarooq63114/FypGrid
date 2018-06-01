@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -61,6 +62,12 @@ public class TechnicianDetail extends AppCompatActivity {
         tCategory.setText(category.toString());
         image.setImageResource(imag);
         TratingBar.setRating(ratingbar);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // Toast.makeText(TechnicianDetail.this, "Hi Baby", Toast.LENGTH_SHORT).show();
+            }
+        });
         //TratingBar.setRating(ratingbar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

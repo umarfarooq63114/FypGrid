@@ -40,19 +40,16 @@
             android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="14dp"
+            android:paddingBottom="13dp"
+            android:paddingTop="13dp"
             >
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/recyclerView"
+                android:scrollbars="vertical"
+                 android:scrollbarSize="1dp"
+                android:scrollbarStyle="outsideInset"
                 android:layout_height="match_parent">
-
-
-
-
-
-
-
 
 
             </android.support.v7.widget.RecyclerView>
