@@ -1,5 +1,7 @@
 package edmt.dev.androidgridlayout;
 
+import android.content.ClipData;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.ViewHolder> {
@@ -71,6 +74,16 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
     public int getItemCount() {
         return users.size();
     }
+
+    public void setFilter(ArrayList<Technician> listitem)
+    {
+        users=new ArrayList<>();
+        users.addAll(listitem);
+        notifyDataSetChanged();
+    }
+
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView technicianName, technicianCategory, status;
