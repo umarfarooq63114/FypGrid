@@ -1,7 +1,11 @@
 package edmt.dev.androidgridlayout;
 
+import android.content.Context;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,8 +31,10 @@ import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -37,6 +43,14 @@ public class TechnicianList extends AppCompatActivity {
     private TechnicianAdapter technicianAdapter;
     Dialog dialog;
     String Tname;
+
+
+
+
+
+
+
+
     private List<Technician> own;
 
 
@@ -49,14 +63,19 @@ public class TechnicianList extends AppCompatActivity {
         setContentView(R.layout.activity_technician_list);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         Tname = "umar";
-        int pic1 =R.drawable.pix,pic2=R.drawable.pic;
-/*
+        int pic1 =R.drawable.pix,pic2=R.drawable.family_time;
 
-*/
+ ActionBar actionBar = getSupportActionBar();
+       //actionBar.setTitle("Items List");
+
+
         own = new ArrayList<>();
+        own.addAll(own);
+        //notifyDataSetChanged();
         String name = null, phone = null;
         float ratingbar = (float) 1.5;
-
+        own.add(new Technician(pic1, "ali" ,
+                "03104121", "offline", "Technician", (float) ratingbar));
         for (int i = 1; i <= 50; i++) {
 
 
@@ -66,6 +85,11 @@ public class TechnicianList extends AppCompatActivity {
                     "69875" + i, "online", "Electrician", (float) ratingbar));
 
         }
+        own.add(new Technician(pic1, "atif" ,
+                "03104121", "offline", "Technician", (float) ratingbar));
+        own.add(new Technician(pic1, "adeel" ,
+                "03104121", "offline", "Technician", (float) ratingbar));
+
 
 //AlertDialog.Builder builder=new AlertDialog.Builder(TechnicianList.this);
 
@@ -96,31 +120,48 @@ public class TechnicianList extends AppCompatActivity {
             }
         });
 
+        //Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar1);
+        //setSupportActionToolBar(toolbar);
+
+
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_item, menu);
-        MenuItem item = menu.findItem(R.id.menuSearch);
-        SearchView searchView = (SearchView)item.getActionView();
+        getMenuInflater().inflate(R.menu.menu_item, menu);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView)myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String s) {
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                //own.getFilter().filter(newText);
-
-                return false;
+            public boolean onQueryTextChange(String s) {
+                if (TextUtils.isEmpty(s)){
+                    technicianAdapter.filter("");
+                    //recyclerView.clearFocus();
+                }
+                else {
+                    technicianAdapter.filter(s);
+                }
+                return true;
             }
         });
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
-
-        return super.onCreateOptionsMenu(menu);
+        if (id==R.id.action_settings){
+            //do your functionality here
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

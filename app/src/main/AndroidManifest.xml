@@ -12,6 +12,9 @@
         <activity android:name=".MainActivity" >
 
         </activity>
+        <activity android:name=".Test">
+        </activity>
+
         <activity android:name=".DeviceDetails">
 
         </activity>

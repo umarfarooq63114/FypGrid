@@ -28,11 +28,18 @@ import java.util.Locale;
 public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.ViewHolder> {
     private List<Technician> users;
     private Context context;
+    LayoutInflater inflater;
+
+    ArrayList <Technician> arrayList;
 
 
     public TechnicianAdapter(Context context, List<Technician> users) {
         this.context = context;
         this.users = users;
+        inflater = LayoutInflater.from(context);
+        this.arrayList = new ArrayList<Technician>();
+
+        this.arrayList.addAll(users);
     }
 
     @Override
@@ -75,13 +82,23 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
         return users.size();
     }
 
-    public void setFilter(ArrayList<Technician> listitem)
-    {
-        users=new ArrayList<>();
-        users.addAll(listitem);
+    //filter
+    public void filter(String charText){
+        charText = charText.toLowerCase(Locale.getDefault());
+        users.clear();
+        if (charText.length()==0){
+            users.addAll(arrayList);
+        }
+        else {
+            for (Technician technician : arrayList){
+                if (technician.getName().toLowerCase(Locale.getDefault())
+                        .contains(charText)){
+                    users.add(technician);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
-
 
 
 
