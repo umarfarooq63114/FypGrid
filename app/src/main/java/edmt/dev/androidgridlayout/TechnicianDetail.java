@@ -73,7 +73,7 @@ public class TechnicianDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
 
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         collapsingToolbar.setTitle(""+name);

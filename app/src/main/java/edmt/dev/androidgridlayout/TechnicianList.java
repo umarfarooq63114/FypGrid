@@ -1,6 +1,14 @@
 package edmt.dev.androidgridlayout;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +53,8 @@ public class TechnicianList extends AppCompatActivity {
     String Tname;
 
 
+    private static final int REQUEST_CALL = 1;
+
 
 
 
@@ -66,6 +76,7 @@ public class TechnicianList extends AppCompatActivity {
         int pic1 =R.drawable.pix,pic2=R.drawable.family_time;
 
  ActionBar actionBar = getSupportActionBar();
+// actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("3984FF")));
        //actionBar.setTitle("Items List");
 
 
@@ -99,34 +110,61 @@ public class TechnicianList extends AppCompatActivity {
         recyclerView.setAdapter(technicianAdapter);
 
     }
-    public  void imageClick(View view)
-    {
+    public  void imageClick(View view) {
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_dialogue);
-        name=(TextView) dialog.findViewById(R.id.name);
-        call=(ImageView) dialog.findViewById(R.id.call);
-        msg=(ImageView) dialog.findViewById(R.id.msg);
-        info=(ImageView) dialog.findViewById(R.id.info);
+        name = (TextView) dialog.findViewById(R.id.name);
+        call = (ImageView) dialog.findViewById(R.id.call);
+        msg = (ImageView) dialog.findViewById(R.id.msg);
+        info = (ImageView) dialog.findViewById(R.id.info);
         dialog.show();
         name.setText(Tname);
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(TechnicianList.this,TechnicianDetail.class);
+                Intent intent = new Intent(TechnicianList.this, TechnicianDetail.class);
                 startActivity(intent);
                 //startActivity(new Intent());
                 Toast.makeText(TechnicianList.this, "Hamm", Toast.LENGTH_SHORT).show();
             }
         });
 
-        //Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar1);
-        //setSupportActionToolBar(toolbar);
 
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String number = "12345";
+                if (number.trim().length() > 0) {
+
+                    if (ContextCompat.checkSelfPermission(TechnicianList.this,
+                            Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(TechnicianList.this,
+                                new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+                    } else {
+                        String dial = "tel:" + number;
+                        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+                    }
+
+                }
+            }
+
+        });
+
+
+
+
+        msg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "123456", null));
+                    intent.putExtra("sms body", "hello baby.....");
+                    startActivity(intent);
+                }
+            });
 
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_item, menu);

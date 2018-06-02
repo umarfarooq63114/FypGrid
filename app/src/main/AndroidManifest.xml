@@ -13,6 +13,7 @@
 
         </activity>
         <activity android:name=".Test">
+
         </activity>
 
         <activity android:name=".DeviceDetails">
@@ -25,8 +26,12 @@
                  <category android:name="android.intent.category.LAUNCHER" />
              </intent-filter>
          </activity>
-        <activity android:name=".TechnicianDetail"></activity>
+        <activity android:name=".TechnicianDetail"
+
+            android:parentActivityName=".TechnicianList">
+
+        </activity>
         <activity android:name=".SelectTechnician"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 </manifest>

@@ -58,6 +58,7 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
         holder.technicianImage.setImageResource(users.get(position).getImage());
         holder.ratingBar.setRating(users.get(position).getRating());
         holder.status.setText(users.get(position).getStatus());
+
         holder.recyclerViewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
