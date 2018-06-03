@@ -13,7 +13,6 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".Test" />
         <activity android:name=".DeviceDetails"></activity>
         <activity android:name=".TechnicianList"> <intent-filter>
             <action android:name="android.intent.action.MAIN" />
