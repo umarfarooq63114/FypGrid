@@ -19,7 +19,7 @@ android:id="@+id/recyclerViewList"
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img"
-            android:onClick="imageClick"
+
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/pix"/>

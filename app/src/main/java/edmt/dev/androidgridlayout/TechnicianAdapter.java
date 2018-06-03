@@ -1,6 +1,13 @@
 package edmt.dev.androidgridlayout;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.ClipData;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -29,6 +36,13 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
     private List<Technician> users;
     private Context context;
     LayoutInflater inflater;
+    TextView name;
+    String Tname="Umar";
+    ImageView call,msg,info;
+    Dialog dialog;
+    private static final int REQUEST_CALL = 1;
+    String Tphone;
+    int Timage;
 
     ArrayList <Technician> arrayList;
 
@@ -75,6 +89,61 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
 
             }
         });
+
+
+        holder.technicianImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Inmage", Toast.LENGTH_SHORT).show();
+
+                Tname=users.get(position).getName();
+                Tphone=users.get(position).getPhone();
+                Timage=users.get(position).getImage();
+
+                dialog = new Dialog(context);
+                dialog.setContentView(R.layout.custom_dialogue);
+                name = (TextView) dialog.findViewById(R.id.name);
+                call = (ImageView) dialog.findViewById(R.id.call);
+                msg = (ImageView) dialog.findViewById(R.id.msg);
+                info = (ImageView) dialog.findViewById(R.id.info);
+                dialog.show();
+                name.setText(Tname);
+
+
+
+                call.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (Tphone.trim().length() > 0) {
+
+                            if (ContextCompat.checkSelfPermission(context,
+                                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions((Activity) context,
+                                        new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+                            } else {
+                                String dial = "tel:" + Tphone;
+                                context.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+                            }
+
+                        }
+                    }
+
+                });
+
+
+                msg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", ""+Tphone, null));
+                        intent.putExtra("sms body", "hello baby.....");
+                        context.startActivity(intent);
+                    }
+                });
+
+            }
+        });
+
 
     }
 

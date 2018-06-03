@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".Cart">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/bg"
+        android:weightSum="6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:id="@+id/textGrid"
+                android:text="TECHNICIANS LIST"
+                android:textSize="34sp"
+                android:textColor="@android:color/white"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <GridLayout
+            android:id="@+id/mainGrid"
+            android:columnCount="1"
+            android:rowCount="4"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingBottom="13dp"
+            android:paddingTop="13dp"
+            >
+            <Button
+                android:id="@+id/selectdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:background="@drawable/rounded_button"
+                android:text="Select Date" />
+
+            <TextView
+                android:id="@+id/set_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/selectTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:background="@drawable/rounded_button"
+                android:text="Select Time" />
+
+            <TextView
+                android:id="@+id/set_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp" />
+            <Button
+                android:id="@+id/addCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="30sp"
+                android:layout_marginTop="30dp"
+                android:textStyle="italic"
+                android:background="@drawable/rounded_button"
+                android:text="Done" />
+        </GridLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+
+
+
+

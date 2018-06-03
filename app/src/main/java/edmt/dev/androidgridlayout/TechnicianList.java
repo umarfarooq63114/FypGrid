@@ -110,6 +110,7 @@ public class TechnicianList extends AppCompatActivity {
         recyclerView.setAdapter(technicianAdapter);
 
     }
+    /*
     public  void imageClick(View view) {
 
         dialog = new Dialog(this);
@@ -164,7 +165,7 @@ public class TechnicianList extends AppCompatActivity {
             });
 
 
-    }
+    }*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_item, menu);

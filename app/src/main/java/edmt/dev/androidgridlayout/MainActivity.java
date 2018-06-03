@@ -1,8 +1,10 @@
 package edmt.dev.androidgridlayout;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -39,6 +41,35 @@ public class MainActivity extends AppCompatActivity {
         setSingleEvent(mainGrid);
         //setToggleEvent(mainGrid);
     }
+
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Are you sure to quit?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+dialogInterface.cancel();
+            }
+        });
+
+    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            finish();
+        }
+    });
+    AlertDialog alertDialog=builder.create();
+    alertDialog.show();
+
+    }
+
+
 
     private void setToggleEvent(GridLayout mainGrid) {
         //Loop all child item of Main Grid
