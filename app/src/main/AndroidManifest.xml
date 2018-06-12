@@ -11,19 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DeviceDetails">
 
         </activity>
-        <activity android:name=".DeviceDetails"></activity>
-        <activity android:name=".TechnicianList"> <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".TechnicianList">
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
-        <activity android:name=".TechnicianDetail" />
-        <activity android:name=".SelectTechnician" />
-        <activity android:name=".Cart">
-                   </activity>
+        <activity android:name=".TechnicianDetail"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".SelectTechnician">
+
+        </activity>
+        <activity android:name=".Cart"></activity>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.menu.MenuView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -36,13 +37,17 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
     private List<Technician> users;
     private Context context;
     LayoutInflater inflater;
+    CardView cardView;
     TextView name;
     String Tname="Umar";
     ImageView call,msg,info;
     Dialog dialog;
-    private static final int REQUEST_CALL = 1;
+        private static final int REQUEST_CALL = 1;
     String Tphone;
     int Timage;
+
+    List<CardView>cardViewList = new ArrayList<>();
+
 
     ArrayList <Technician> arrayList;
 
@@ -73,13 +78,17 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
         holder.ratingBar.setRating(users.get(position).getRating());
         holder.status.setText(users.get(position).getStatus());
 
+
+
+
         holder.recyclerViewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent;
                 intent = new Intent(context, TechnicianDetail.class);
 
-                intent.putExtra("name", users.get(position).getName());
+
+            intent.putExtra("name", users.get(position).getName());
                 intent.putExtra("image", users.get(position).getImage());
                 intent.putExtra("phone", users.get(position).getPhone());
                 intent.putExtra("category", users.get(position).getCategory());
@@ -140,9 +149,32 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
                         context.startActivity(intent);
                     }
                 });
+                info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        Intent intent;
+                        intent = new Intent(context, TechnicianDetail.class);
+
+
+                        intent.putExtra("name", users.get(position).getName());
+                        intent.putExtra("image", users.get(position).getImage());
+                        intent.putExtra("phone", users.get(position).getPhone());
+                        intent.putExtra("category", users.get(position).getCategory());
+                        intent.putExtra("status", users.get(position).getStatus());
+                        intent.putExtra("rating",users.get(position).getRating());
+                        context.startActivity(intent);
+
+
+
+                        Toast.makeText(context, "info clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });
+
 
 
     }
@@ -178,7 +210,6 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
         LinearLayout recyclerViewList;
         ImageView technicianImage;
 
-
         public ViewHolder(View itemView) {
             super(itemView);
             technicianImage = itemView.findViewById(R.id.img);
@@ -187,6 +218,7 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
             ratingBar = itemView.findViewById(R.id.ratingBar);
             recyclerViewList = itemView.findViewById(R.id.recyclerViewList);
             status = itemView.findViewById(R.id.status);
+
         }
     }
 }

@@ -8,46 +8,71 @@
 
 
     <LinearLayout
-        android:orientation="vertical"
-        android:background="@drawable/bg"
-        android:weightSum="6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg"
+        android:orientation="vertical"
+        android:weightSum="6">
 
 
         <RelativeLayout
-            android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
             <TextView
                 android:id="@+id/textGrid"
-                android:text="TECHNICIANS LIST"
-                android:textSize="34sp"
-                android:textColor="@android:color/white"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="TECHNICIANS LIST"
+                android:textColor="@android:color/white"
+                android:textSize="34sp" />
 
         </RelativeLayout>
 
         <GridLayout
             android:id="@+id/mainGrid"
-            android:columnCount="1"
-            android:rowCount="4"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
-            android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="4"
+            android:alignmentMode="alignMargins"
+            android:columnCount="1"
+            android:columnOrderPreserved="false"
             android:paddingBottom="13dp"
-            android:paddingTop="13dp"
-            >
-           <android.support.v7.widget.RecyclerView
-               android:id="@+id/recyclerView"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
+            android:paddingTop="0dp"
+            android:rowCount="4">
 
-           </android.support.v7.widget.RecyclerView>
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe"
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent">
+
+
+
+
+
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"
+
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+
+
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
 
         </GridLayout>
 
