@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import android.support.v7.widget.Toolbar;
 public class TechnicianDetail extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbar;
     private String tName;
+    Button btnAdd;
     ImageView image;
     TextView tvname,tvphone,tvstatus,tCategory;
     RatingBar TratingBar;
@@ -40,6 +42,7 @@ public class TechnicianDetail extends AppCompatActivity {
         tvstatus=findViewById(R.id.status);
         tCategory=findViewById(R.id.tCategory);
         image=findViewById(R.id.img);
+        btnAdd=findViewById(R.id.btnAdd);
 
         String name = null,phone=null,status=null,category=null;
         int imag = 0;
@@ -62,6 +65,12 @@ public class TechnicianDetail extends AppCompatActivity {
         tCategory.setText(category.toString());
         image.setImageResource(imag);
         TratingBar.setRating(ratingbar);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TechnicianDetail.this,Cart.class));
+            }
+        });
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +85,14 @@ public class TechnicianDetail extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor);
+
+
+
+        // /collapsingToolbar.setCollapsedTitleTextColor(Integer.parseInt("fff"));
         collapsingToolbar.setTitle(""+name);
 
     }

@@ -58,12 +58,6 @@ public class TechnicianList extends AppCompatActivity {
 
     private static final int REQUEST_CALL = 1;
 
-
-
-
-
-
-
     private List<Technician> own;
 
 
@@ -88,7 +82,7 @@ public class TechnicianList extends AppCompatActivity {
         //notifyDataSetChanged();
         String name = null, phone = null;
         float ratingbar = (float) 1.5;
-        own.add(new Technician(pic1, "ali" ,
+        own.add(new Technician(pic1, "ali ahmed umar farooq" ,
                 "03104121", "offline", "Technician", (float) ratingbar));
         for (int i = 1; i <= 50; i++) {
 

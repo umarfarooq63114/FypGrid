@@ -21,7 +21,7 @@
             android:layout_height="0dp">
             <TextView
                 android:id="@+id/textGrid"
-                android:text="TECHNICIANS LIST"
+                android:text="SELECT TIME &amp; DATE"
                 android:textSize="34sp"
                 android:textColor="@android:color/white"
                 android:layout_centerInParent="true"
@@ -33,18 +33,19 @@
         <GridLayout
             android:id="@+id/mainGrid"
             android:columnCount="1"
-            android:rowCount="4"
+            android:rowCount="3"
             android:alignmentMode="alignMargins"
             android:columnOrderPreserved="false"
             android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingBottom="13dp"
-            android:paddingTop="13dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="15dp"
             >
             <Button
                 android:id="@+id/selectdate"
                 android:layout_width="match_parent"
+                android:layout_margin="10dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
@@ -62,6 +63,7 @@
 
             <Button
                 android:id="@+id/selectTime"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -78,16 +80,17 @@
                 android:gravity="center"
                 android:padding="10dp" />
             <Button
+                android:layout_margin="10dp"
                 android:id="@+id/addCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:layout_marginTop="30dp"
                 android:textStyle="italic"
                 android:background="@drawable/rounded_button"
-                android:text="Done" />
+                android:text="submit" />
         </GridLayout>
 
     </LinearLayout>
