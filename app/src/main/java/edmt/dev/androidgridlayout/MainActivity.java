@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     GridLayout mainGrid;
     ActionBar actionBar;
@@ -31,11 +31,6 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
 
-
-
-
-
-
         mainGrid = (GridLayout) findViewById(R.id.mainGrid);
 
         //Set Event
@@ -44,31 +39,28 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-
-
     @Override
     public void onBackPressed() {
-        final AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("Are you sure to quit?");
         builder.setCancelable(true);
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-dialogInterface.cancel();
+                dialogInterface.cancel();
             }
         });
 
-    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            finish();
-        }
-    });
-    AlertDialog alertDialog=builder.create();
-    alertDialog.show();
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
     }
-
 
 
     private void setToggleEvent(GridLayout mainGrid) {
@@ -96,19 +88,23 @@ dialogInterface.cancel();
 
     private void setSingleEvent(GridLayout mainGrid) {
         //Loop all child item of Main Grid
+
         for (int i = 0; i < mainGrid.getChildCount(); i++) {
             //You can see , all child item is CardView , so we just cast object to CardView
             CardView cardView = (CardView) mainGrid.getChildAt(i);
-            final int finalI = i;
+            final int finalI= i;
+
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                if( finalI == 0){
-                    Intent intent = new Intent(MainActivity.this,DeviceDetails.class);
-                    intent.putExtra("info","This is activity from card item index  "+finalI);
-                    startActivity(intent);}
+                    //if( finalI == 0){
+                    Intent intent = new Intent(MainActivity.this, DeviceDetails.class);
 
+                    intent.putExtra("val",""+finalI);
+                    startActivity(intent);
                 }
+
+                //}
             });
         }
     }
