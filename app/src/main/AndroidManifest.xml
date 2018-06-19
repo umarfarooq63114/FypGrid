@@ -3,6 +3,7 @@
     package="edmt.dev.androidgridlayout">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:label="MAIN"
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:label="MAIN">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,32 +21,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:label="DEVICE DETAILS"
-            android:name=".DeviceDetails">
-
-        </activity>
+            android:name=".DeviceDetails"
+            android:label="DEVICE DETAILS"></activity>
         <activity
-            android:label="TECHNICIANS LIST"
-            android:name=".TechnicianList">
-
-
-        </activity>
+            android:name=".TechnicianList"
+            android:label="TECHNICIANS LIST">
+           </activity>
         <activity
-            android:label="TECHNICIANS DETAILS"
             android:name=".TechnicianDetail"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-
-        </activity>
-
+            android:label="TECHNICIANS DETAILS"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
-            android:label="SELECT TECHNICIANS"
-            android:name=".SelectTechnician">
-
-        </activity>
+            android:name=".SelectTechnician"
+            android:label="SELECT TECHNICIANS"></activity>
         <activity
-            android:label="CART"
-            android:name=".Cart">
+            android:name=".Cart"
+            android:label="CART"></activity>
+        <activity
+            android:name=".Drawer"
+            android:label="@string/title_activity_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
     </application>
