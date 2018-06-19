@@ -79,18 +79,20 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp" />
+
             <Button
-                android:layout_margin="10dp"
                 android:id="@+id/addCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/rounded_button"
+
                 android:gravity="center"
                 android:padding="10dp"
+                android:text="submit"
                 android:textSize="20sp"
-                android:layout_marginTop="30dp"
-                android:textStyle="italic"
-                android:background="@drawable/rounded_button"
-                android:text="submit" />
+                android:textStyle="italic" />
         </GridLayout>
 
     </LinearLayout>

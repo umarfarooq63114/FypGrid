@@ -72,6 +72,10 @@ public class TechnicianList extends AppCompatActivity {
         Tname = "umar";
         int pic1 =R.drawable.pix,pic2=R.drawable.family_time;
 
+
+
+
+
  ActionBar actionBar = getSupportActionBar();
 // actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("3984FF")));
        //actionBar.setTitle("Items List");
@@ -105,11 +109,6 @@ public class TechnicianList extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(technicianAdapter);
-
-
-
-
-
 
 
         swipeRefreshLayout=findViewById(R.id.swipe);

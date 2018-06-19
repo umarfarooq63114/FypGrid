@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 public class TechnicianDetail extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbar;
+    static String name = null;
     private String tName;
     Button btnAdd;
     ImageView image;
@@ -44,7 +45,8 @@ public class TechnicianDetail extends AppCompatActivity {
         image=findViewById(R.id.img);
         btnAdd=findViewById(R.id.btnAdd);
 
-        String name = null,phone=null,status=null,category=null;
+
+          String phone=null,status=null,category=null;
         int imag = 0;
         float ratingbar = 0;
 

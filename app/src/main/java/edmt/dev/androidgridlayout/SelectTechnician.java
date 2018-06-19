@@ -24,6 +24,9 @@ public class SelectTechnician extends AppCompatActivity {
         //Set Event
         setSingleEvent(mainGrid);
         //setToggleEvent(mainGrid);
+
+
+
     }
 
     private void setToggleEvent(GridLayout mainGrid) {
@@ -60,7 +63,7 @@ public class SelectTechnician extends AppCompatActivity {
                 public void onClick(View view) {
                     if( finalI == 0){
                         Intent intent = new Intent(SelectTechnician.this,TechnicianList.class);
-                        intent.putExtra("info","This is activity from card item index  "+finalI);
+
                         startActivity(intent);}
 
                 }
