@@ -7,12 +7,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-public class DeviceDetails extends Activity {
+public class DeviceDetails extends Activity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinner1, spinner2, spinner3;
     private Button btnSubmit;
@@ -23,9 +24,9 @@ public class DeviceDetails extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_details);
-
+spinner2=findViewById(R.id.spinner2);
         addItemsOnSpinner1();
-        addItemsOnSpinner2();
+
         addItemsOnSpinner3();
         addListenerOnButton();
         addListenerOnSpinnerItemSelection();
@@ -65,57 +66,10 @@ public class DeviceDetails extends Activity {
                 android.R.layout.simple_spinner_item, deviceModel);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
+
     }
 
 
-    public void addItemsOnSpinner2() {
-
-        spinner2 = (Spinner) findViewById(R.id.spinner2);
-        String value = String.valueOf(spinner1.getSelectedItem());
-        List<String> deviceName = new ArrayList<String>();
-        if ( value == "SAMSUNG") {
-            deviceName.add("GALAXY S Series");
-            deviceName.add("GALAXY J Series");
-            deviceName.add("GALAXY A Series");
-            deviceName.add("GALAXY C Series");
-            deviceName.add("GALAXY Note Series");
-        }
-        else if ( value == "APPLE") {
-            deviceName.add("iPOD ");
-            deviceName.add("iPAD");
-            deviceName.add("S Series");
-        }
-
-        else if (a == 1 && value == "HUAWEI") {
-            deviceName.add("GALAXY S Series");
-            deviceName.add("GALAXY J Series");
-            deviceName.add("GALAXY A Series");
-            deviceName.add("GALAXY C Series");
-            deviceName.add("GALAXY Note Series");
-        }
-
-
-        else if (a == 1 && value == "HTC") {
-            deviceName.add("GALAXY S Series");
-            deviceName.add("GALAXY J Series");
-            deviceName.add("GALAXY A Series");
-            deviceName.add("GALAXY C Series");
-            deviceName.add("GALAXY Note Series");
-        }
-
-        if (a == 2 || a==3) {
-            deviceName.add("INSPIRON 3000 SERIES");
-            deviceName.add("INSPIRON 5000 SERIES");
-            deviceName.add("INSPIRON 7000 SERIES");
-            deviceName.add("G SERIES");
-
-        }
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, deviceName);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner2.setAdapter(dataAdapter);
-    }
 
 
     public void addItemsOnSpinner3() {
@@ -138,11 +92,9 @@ public class DeviceDetails extends Activity {
 
     public void addListenerOnSpinnerItemSelection() {
         spinner1 = (Spinner) findViewById(R.id.spinner1);
-        spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+        spinner1.setOnItemSelectedListener(this);
 
 
-        spinner2 = (Spinner) findViewById(R.id.spinner2);
-        spinner2.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 
 
     }
@@ -176,5 +128,59 @@ public class DeviceDetails extends Activity {
             }
 
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            List<String> deviceName = new ArrayList<String>();
+            if ( i==0) {
+                deviceName.add("GALAXY S Series");
+                deviceName.add("GALAXY J Series");
+                deviceName.add("GALAXY A Series");
+                deviceName.add("GALAXY C Series");
+                deviceName.add("GALAXY Note Series");
+            }
+            else if ( i==1) {
+                deviceName.add("iPHONE iPOD ");
+                deviceName.add("iPHONE iPAD");
+                deviceName.add("iPHONE S Series");
+            }
+
+            else if (i==2) {
+                deviceName.add("HAWEII P SERIES");
+                deviceName.add("HAWEII MATE Series");
+                deviceName.add("HAWEII HONOR Series");
+                deviceName.add("HAWEII Y Series");
+                deviceName.add("HAWEII G Series");
+            }
+
+
+            else if (i==3) {
+                deviceName.add("HTC DESIRE SERIES");
+                deviceName.add("HTC ONE/ONE S");
+                deviceName.add("HTC BUTTERFLY");
+                deviceName.add("HTC U11/U11+");
+                deviceName.add("HTC 10");
+            }
+
+            else if (i==4) {
+                deviceName.add("INSPIRON 3000 SERIES");
+                deviceName.add("INSPIRON 5000 SERIES");
+                deviceName.add("INSPIRON 7000 SERIES");
+                deviceName.add("G SERIES");
+
+            }
+
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, deviceName);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner2.setAdapter(dataAdapter);
+        }
+
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
