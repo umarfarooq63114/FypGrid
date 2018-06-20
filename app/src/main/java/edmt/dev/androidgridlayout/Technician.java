@@ -1,76 +1,75 @@
 package edmt.dev.androidgridlayout;
-
+import com.google.gson.annotations.SerializedName;
 public class Technician {
+    @SerializedName("name")
+String name;
+        @SerializedName("cnic")
+        String  cnic;
+        @SerializedName("email")
+        String email;
+        @SerializedName("address")
+        String address;
+        @SerializedName("status")
+        String status;
+        @SerializedName("phone")
+        String phone;
+        @SerializedName("experience")
+        String experience;
+        @SerializedName("rating")
+        double rating;
 
-        private int image;
-        private String status,category;
-    private String name;
-    private String phone;
-    private float rating;
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
+        @SerializedName("specaility_id")
+        int specaility_id;
 
 
-
-
-
-
-        public Technician(int image, String name, String phone,String status ,String category,float rating) {
-            this.image = image;
+        public Technician(String name, String cnic, String address, String email, String status, String phone, String experience, double rating, int specaility_id) {
             this.name = name;
-            this.category=category;
-            this.status=status;
+            this.cnic = cnic;
+            this.address = address;
+            this.email = email;
+            this.status = status;
             this.phone = phone;
-            this.rating=rating;
-        }
+            this.experience = experience;
+            this.rating = rating;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public int getImage() {
-            return image;
-        }
-
-        public void setImage(int image) {
-            this.image = image;
+            this.specaility_id = specaility_id;
         }
 
         public String getName() {
             return name;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public String getCnic() {
+            return cnic;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getStatus() {
+            return status;
         }
 
         public String getPhone() {
             return phone;
         }
 
-        public void setPhone(String phone) {
-            this.phone = phone;
+        public String getExperience() {
+            return experience;
         }
-    }
+
+        public double getRating() {
+            return rating;
+        }
 
 
 
-
+        public int getSpeciality() {
+            return specaility_id;
+        }
+}

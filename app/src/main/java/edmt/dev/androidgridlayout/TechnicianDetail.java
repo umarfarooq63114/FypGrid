@@ -25,13 +25,16 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
+import static edmt.dev.androidgridlayout.TechnicianAdapter.ratingValue;
+
 public class TechnicianDetail extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbar;
-    static String name = null;
+    static String name = null,exp,add;
     private String tName;
     Button btnAdd;
     ImageView image;
-    TextView tvname,tvphone,tvstatus,tCategory;
+    TextView tvname,tvphone,tvstatus,tCategory,tExp,address;
     RatingBar TratingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,42 +46,49 @@ public class TechnicianDetail extends AppCompatActivity {
         tvstatus=findViewById(R.id.status);
         tCategory=findViewById(R.id.tCategory);
         image=findViewById(R.id.img);
+        tExp=findViewById(R.id.tExp);
+        address=findViewById(R.id.address);
+
         btnAdd=findViewById(R.id.btnAdd);
 
 
           String phone=null,status=null,category=null;
         int imag = 0;
-        float ratingbar = 0;
+        float rating = 0;
 
         Intent intent = getIntent();
         if (null != intent) { //Null Checking
             name = intent.getStringExtra("name");
             phone = intent.getStringExtra("phone");
-            category=intent.getStringExtra("category");
+            exp = intent.getStringExtra("exp");
             status=intent.getStringExtra("status");
-            imag=intent.getExtras().getInt("image");
-            ratingbar=intent.getExtras().getFloat("rating");
+            add=intent.getStringExtra("add");
+            //imag=intent.getExtras().getInt("image");
+            rating=intent.getFloatExtra("rat",4);
             //imag=intent.getIntExtra("image");
             //ratingbar = intent.getFloatExtra("rating", Float.parseFloat(""));
 
         }
         tvphone.setText(phone.toString());
         tvstatus.setText(status.toString());
-        tCategory.setText(category.toString());
-        image.setImageResource(imag);
-        TratingBar.setRating(ratingbar);
+        tExp.setText(exp.toString());
+        address.setText(add.toString());
+       // tCategory.setText(category.toString());
+      //  image.setImageResource(imag);
+
+        TratingBar.setRating((float)ratingValue);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TechnicianDetail.this,Cart.class));
             }
         });
-        image.setOnClickListener(new View.OnClickListener() {
+       /* image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                // Toast.makeText(TechnicianDetail.this, "Hi Baby", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         //TratingBar.setRating(ratingbar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

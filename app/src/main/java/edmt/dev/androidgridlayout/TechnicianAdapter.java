@@ -36,6 +36,7 @@ import java.util.Locale;
 public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.ViewHolder> {
     private List<Technician> users;
     private Context context;
+   static float ratingValue;
     LayoutInflater inflater;
     CardView cardView;
     TextView name;
@@ -73,9 +74,10 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.technicianName.setText(users.get(position).getName());
-        holder.technicianCategory.setText(users.get(position).getCategory());
-        holder.technicianImage.setImageResource(users.get(position).getImage());
-        holder.ratingBar.setRating(users.get(position).getRating());
+        holder.technicianName.setText(users.get(position).getName());
+        //holder.technicianCategory.setText(users.get(position).getCategory());
+       // holder.technicianImage.setImageResource(users.get(position).getImage());
+        holder.ratingBar.setRating((float) users.get(position).getRating());
         holder.status.setText(users.get(position).getStatus());
 
 
@@ -89,25 +91,28 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
 
 
             intent.putExtra("name", users.get(position).getName());
-                intent.putExtra("image", users.get(position).getImage());
+
+               // intent.putExtra("image", users.get(position).getImage());
                 intent.putExtra("phone", users.get(position).getPhone());
-                intent.putExtra("category", users.get(position).getCategory());
                 intent.putExtra("status", users.get(position).getStatus());
-                 intent.putExtra("rating",users.get(position).getRating());
+                intent.putExtra("exp", users.get(position).getExperience());
+                 ratingValue= ((float) users.get(position).getRating());
+                intent.putExtra("rat",users.get(position).getRating());
+                intent.putExtra("add",users.get(position).getAddress());
                 context.startActivity(intent);
 
             }
         });
 
 
-        holder.technicianImage.setOnClickListener(new View.OnClickListener() {
+    /*    holder.technicianImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Inmage", Toast.LENGTH_SHORT).show();
 
                 Tname=users.get(position).getName();
                 Tphone=users.get(position).getPhone();
-                Timage=users.get(position).getImage();
+               // Timage=users.get(position).getImage();
 
                 dialog = new Dialog(context);
                 dialog.setContentView(R.layout.custom_dialogue);
@@ -159,9 +164,9 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
 
 
                         intent.putExtra("name", users.get(position).getName());
-                        intent.putExtra("image", users.get(position).getImage());
+                        //intent.putExtra("image", users.get(position).getImage());
                         intent.putExtra("phone", users.get(position).getPhone());
-                        intent.putExtra("category", users.get(position).getCategory());
+                       // intent.putExtra("category", users.get(position).getCategory());
                         intent.putExtra("status", users.get(position).getStatus());
                         intent.putExtra("rating",users.get(position).getRating());
                         context.startActivity(intent);
@@ -175,7 +180,7 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
             }
         });
 
-
+*/
 
     }
 
@@ -212,9 +217,9 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            technicianImage = itemView.findViewById(R.id.img);
+            //technicianImage = itemView.findViewById(R.id.img);
             technicianName = itemView.findViewById(R.id.tName);
-            technicianCategory = itemView.findViewById(R.id.tCategory);
+            //technicianCategory = itemView.findViewById(R.id.tCategory);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             recyclerViewList = itemView.findViewById(R.id.recyclerViewList);
             status = itemView.findViewById(R.id.status);
