@@ -1,14 +1,20 @@
 package edmt.dev.androidgridlayout;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,12 +25,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edmt.dev.androidgridlayout.Model.Category;
+import edmt.dev.androidgridlayout.Retrofit.GetRetrofit;
+import edmt.dev.androidgridlayout.Retrofit.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    GridLayout mainGrid;
+    ArrayList<Category> own;
+    private RecyclerView recyclerView;
+    private RetrofitClient apiInterface;
+    private MainAdapter mainAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
+
     ActionBar actionBar;
 
     @Override
@@ -33,10 +56,82 @@ public class Drawer extends AppCompatActivity
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mainGrid = (GridLayout) findViewById(R.id.mainGrid);
+
+
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        own = new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(Drawer.this));
+        recyclerView.setHasFixedSize(true);
+
+        // getting values from api
+
+        swipeRefreshLayout=findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mainAdapter.notifyDataSetChanged();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
+
+        apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+        Call<List<Category>> cal = apiInterface.getCategoriesList();
+        RetrofitClient apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+        cal.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                List<Category> list = response.body();
+                if (response.isSuccessful()) {
+                    for (Category x : list) {
+                        own.add(x);
+                    }
+                    Toast.makeText(Drawer.this, "connection successfull", Toast.LENGTH_SHORT).show();
+                    Log.d("MTAG", "onResponse: is successfully: " + response.body());
+
+                    mainAdapter = new MainAdapter(Drawer.this,own);
+                    recyclerView.setAdapter(mainAdapter);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                Toast.makeText(Drawer.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      //  mainGrid = (GridLayout) findViewById(R.id.mainGrid);
 
         //Set Event
-        setSingleEvent(mainGrid);
+        //setSingleEvent(mainGrid);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -126,7 +221,7 @@ public class Drawer extends AppCompatActivity
 
 
 
-    private void setToggleEvent(GridLayout mainGrid) {
+   /* private void setToggleEvent(GridLayout mainGrid) {
         //Loop all child item of Main Grid
         for (int i = 0; i < mainGrid.getChildCount(); i++) {
             //You can see , all child item is CardView , so we just cast object to CardView
@@ -147,9 +242,9 @@ public class Drawer extends AppCompatActivity
                 }
             });
         }
-    }
+    }*/
 
-    private void setSingleEvent(GridLayout mainGrid) {
+   /* private void setSingleEvent(GridLayout mainGrid) {
         //Loop all child item of Main Grid
         for (int i = 0; i < mainGrid.getChildCount(); i++) {
             //You can see , all child item is CardView , so we just cast object to CardView
@@ -166,7 +261,7 @@ public class Drawer extends AppCompatActivity
                 }
             });
         }
-    }
+    }*/
 
 
 }

@@ -68,10 +68,22 @@ public class TechnicianDetail extends AppCompatActivity {
             //imag=intent.getIntExtra("image");
             //ratingbar = intent.getFloatExtra("rating", Float.parseFloat(""));
 
+            Toast.makeText(this, "Status "+status, Toast.LENGTH_SHORT).show();
         }
+
+
+       /* if(status=="1")
+        {
+            tvstatus.setText("ONLINE");
+        }
+        else
+        if(status=="0")
+        {
+            tvstatus.setText("OFFLINE");
+        }*/
         tvphone.setText(phone.toString());
-        tvstatus.setText(status.toString());
         tExp.setText(exp.toString());
+        tvstatus.setText(status.toString());
         address.setText(add.toString());
        // tCategory.setText(category.toString());
       //  image.setImageResource(imag);

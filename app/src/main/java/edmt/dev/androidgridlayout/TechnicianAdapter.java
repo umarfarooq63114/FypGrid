@@ -39,6 +39,7 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
    static float ratingValue;
     LayoutInflater inflater;
     CardView cardView;
+    String stat;
     TextView name;
     String Tname="Umar";
     ImageView call,msg,info;
@@ -78,7 +79,17 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
         //holder.technicianCategory.setText(users.get(position).getCategory());
        // holder.technicianImage.setImageResource(users.get(position).getImage());
         holder.ratingBar.setRating((float) users.get(position).getRating());
-        holder.status.setText(users.get(position).getStatus());
+         int x= users.get(position).getStatus();
+         if(x==1)
+         {
+             stat="Online";
+         }
+         else if(x==0)
+         {
+             stat="Offline";
+         }
+
+        holder.status.setText(stat);
 
 
 
@@ -94,7 +105,7 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
 
                // intent.putExtra("image", users.get(position).getImage());
                 intent.putExtra("phone", users.get(position).getPhone());
-                intent.putExtra("status", users.get(position).getStatus());
+                intent.putExtra("status", ""+users.get(position).getStatus());
                 intent.putExtra("exp", users.get(position).getExperience());
                  ratingValue= ((float) users.get(position).getRating());
                 intent.putExtra("rat",users.get(position).getRating());

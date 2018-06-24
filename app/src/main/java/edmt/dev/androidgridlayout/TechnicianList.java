@@ -84,7 +84,20 @@ public class TechnicianList extends AppCompatActivity {
         Tname = "umar";
         int pic1 = R.drawable.pix, pic2 = R.drawable.family_time;
 
+        swipeRefreshLayout=findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
 
+                technicianAdapter.notifyDataSetChanged();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
         // getting values from api
 
         apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
@@ -109,8 +122,8 @@ public class TechnicianList extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Technician>> call, Throwable t) {
-                Log.d("MTAG", "onResponse: is Fail " + t.getLocalizedMessage());
-                Toast.makeText(TechnicianList.this, "connection fail", Toast.LENGTH_SHORT).show();
+                Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                Toast.makeText(TechnicianList.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         });
 

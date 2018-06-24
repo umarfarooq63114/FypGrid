@@ -10,7 +10,7 @@ String name;
         @SerializedName("address")
         String address;
         @SerializedName("status")
-        String status;
+        int status;
         @SerializedName("phone")
         String phone;
         @SerializedName("experience")
@@ -22,7 +22,7 @@ String name;
         int specaility_id;
 
 
-        public Technician(String name, String cnic, String address, String email, String status, String phone, String experience, double rating, int specaility_id) {
+        public Technician(String name, String cnic, String address, String email, int status, String phone, String experience, double rating, int specaility_id) {
             this.name = name;
             this.cnic = cnic;
             this.address = address;
@@ -51,7 +51,7 @@ String name;
             return email;
         }
 
-        public String getStatus() {
+        public int getStatus() {
             return status;
         }
 

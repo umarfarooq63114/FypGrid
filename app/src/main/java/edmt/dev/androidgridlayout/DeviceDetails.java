@@ -19,8 +19,9 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
 
     private Spinner spinner1, spinner2, spinner3;
     private Button btnSubmit;
+    int a;
     TextView tvModel, tvDefect, tvName;
-    int a = 2;
+
     String a1;
 
     static String dev_name,dev_model,dev_defects;
@@ -37,9 +38,12 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
         spinner2 = findViewById(R.id.spinner2);
         Intent intent = getIntent();
         //  if (null != intent) { //Null Checking
-        a1 = intent.getExtras().getString("val");
+        a1 = intent.getExtras().getString("name");
+        a = intent.getExtras().getInt("pos");
 
-        a = Integer.parseInt(a1);
+
+        //Toast.makeText(this, "vallues a "+a+" a1 "+a1, Toast.LENGTH_SHORT).show();
+        //a = Integer.parseInt(a1);
 
         addItemsOnSpinner1();
         addItemsOnSpinner3();
