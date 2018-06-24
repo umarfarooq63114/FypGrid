@@ -75,10 +75,11 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.technicianName.setText(users.get(position).getName());
-        holder.technicianName.setText(users.get(position).getName());
+        //holder.technicianName.setText(users.get(position).getName());
         //holder.technicianCategory.setText(users.get(position).getCategory());
        // holder.technicianImage.setImageResource(users.get(position).getImage());
         holder.ratingBar.setRating((float) users.get(position).getRating());
+        //holder.technicianCategory.setText(users.get(position).get());
          int x= users.get(position).getStatus();
          if(x==1)
          {
@@ -233,6 +234,7 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
             //technicianCategory = itemView.findViewById(R.id.tCategory);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             recyclerViewList = itemView.findViewById(R.id.recyclerViewList);
+            technicianCategory = itemView.findViewById(R.id.tCategory);
             status = itemView.findViewById(R.id.status);
 
         }

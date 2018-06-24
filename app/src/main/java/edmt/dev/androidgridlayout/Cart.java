@@ -16,6 +16,13 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import edmt.dev.androidgridlayout.Model.BookService;
+import edmt.dev.androidgridlayout.Retrofit.GetRetrofit;
+import edmt.dev.androidgridlayout.Retrofit.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static edmt.dev.androidgridlayout.DeviceDetails.dev_defects;
 import static edmt.dev.androidgridlayout.DeviceDetails.dev_model;
 import static edmt.dev.androidgridlayout.DeviceDetails.dev_name;
@@ -25,7 +32,7 @@ public class Cart extends AppCompatActivity {
 Dialog dialog;
 
 Button cancel,ok;
-TextView dModel,dDefect,tName,Time,Date,dName;
+TextView itemName,brandName,fault,technicianName,Time,Date,dName;
 
     private static Button date, time;
     private static TextView set_date, set_time;
@@ -74,29 +81,85 @@ TextView dModel,dDefect,tName,Time,Date,dName;
             public void onClick(View view) {
                 dialog = new Dialog(Cart.this);
                 dialog.setContentView(R.layout.confirm_dialogue);
-                dName =  dialog.findViewById(R.id.dName);
-                dModel =  dialog.findViewById(R.id.dModel);
-                dDefect =  dialog.findViewById(R.id.dDefect);
-                tName =  dialog.findViewById(R.id.tName);
+                itemName =  dialog.findViewById(R.id.itemName);
+                brandName =  dialog.findViewById(R.id.brandName);
+                fault =  dialog.findViewById(R.id.fault);
+                technicianName =  dialog.findViewById(R.id.technicianName);
                 Time = dialog.findViewById(R.id.Time);
                 Date =  dialog.findViewById(R.id.Date);
                 cancel =  dialog.findViewById(R.id.cancel);
                 ok =  dialog.findViewById(R.id.ok);
 
-                dName.setText(dev_name);
-                dModel.setText(dev_model);
-                dDefect.setText(dev_defects);
-                tName.setText(name);
+                itemName.setText(dev_name);
+                brandName.setText(dev_model);
+                fault.setText(dev_defects);
+                technicianName.setText(name);
                 Time.setText(time1);
                 Date.setText(date1);
                 dialog.show();
 
+
+
+
+
+
+
+
+
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Toast.makeText(Cart.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                    public void onClick(View v) {
+                        itemName =  dialog.findViewById(R.id.itemName);
+                        brandName =  dialog.findViewById(R.id.brandName);
+                        fault =  dialog.findViewById(R.id.fault);
+                        technicianName =  dialog.findViewById(R.id.technicianName);
+                        Time = dialog.findViewById(R.id.Time);
+                        Date =  dialog.findViewById(R.id.Date);
+
+
+                       BookService bookService= new BookService(""+itemName.getText().toString(),
+                                ""+brandName.getText().toString(),""+fault.getText().toString(),
+                                (2),
+                                ""+Time.getText().toString(),
+                                ""+Date.getText().toString());
+
+                        /*BookService bookService= new BookService("iphone","5S"
+                                ,"Screen broken",2,
+                                "11:12:12","2018-02-11");*/
+
+
+
+                        RetrofitClient apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+                        Call<BookService> call = apiInterface.postBookService(bookService);
+                        call.enqueue(new Callback<BookService>() {
+                            @Override
+                            public void onResponse(Call<BookService> call, Response<BookService> response) {
+                                Toast.makeText(Cart.this, "Request successfully submitted", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onFailure(Call<BookService> call, Throwable t) {
+                                Toast.makeText(Cart.this, "Request Failed", Toast.LENGTH_SHORT).show();
+
+
+
+                            }
+                        });
+
                     }
                 });
+
+
+
+
+
+
+
+
+
+
+
 
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -144,9 +207,14 @@ TextView dModel,dDefect,tName,Time,Date,dName;
         @Override
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // store the data in one string and set it to text
-             date1 = String.valueOf(month) + "/" + String.valueOf(day)
-                    + "/" + String.valueOf(year);
+
+            date1 = String.valueOf(year) + "-" + String.valueOf(month)
+                    + "-" + String.valueOf(day);
             set_date.setText(date1);
+
+            /*date1 = String.valueOf(month) + "/" + String.valueOf(day)
+                    + "/" + String.valueOf(year);
+            set_date.setText(date1);*/
         }
     };
     TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
@@ -154,7 +222,7 @@ TextView dModel,dDefect,tName,Time,Date,dName;
         @Override
         public void onTimeSet(TimePicker view, int hour, int minute) {
             // store the data in one string and set it to text
-             time1 = String.valueOf(hour) + ":" + String.valueOf(minute);
+             time1 = String.valueOf(hour) + ":" + String.valueOf(minute)+":20";
             set_time.setText(time1);
         }
     };

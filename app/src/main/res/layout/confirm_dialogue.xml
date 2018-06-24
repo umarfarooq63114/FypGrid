@@ -32,7 +32,7 @@
 
 
             <TextView
-                android:id="@+id/dName"
+                android:id="@+id/itemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -43,7 +43,7 @@
                 android:textColor="#000"
                 android:textSize="15sp" />
             <TextView
-                android:id="@+id/dModel"
+                android:id="@+id/brandName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -54,7 +54,7 @@
                 android:textColor="#000"
                 android:textSize="15sp" />
             <TextView
-                android:id="@+id/dDefect"
+                android:id="@+id/fault"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -67,7 +67,7 @@
 
 
             <TextView
-                android:id="@+id/tName"
+                android:id="@+id/technicianName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edmt.dev.androidgridlayout">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -14,41 +15,33 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="MAIN">
-
-        </activity>
+            android:label="MAIN"></activity>
         <activity
             android:name=".DeviceDetails"
-            android:label="DEVICE DETAILS">
-
-        </activity>
+            android:label="DEVICE DETAILS"></activity>
         <activity
             android:name=".TechnicianList"
-            android:label="TECHNICIANS LIST">
-
-
-
-           </activity>
+            android:label="TECHNICIANS LIST"></activity>
         <activity
             android:name=".TechnicianDetail"
             android:label="TECHNICIANS DETAILS"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".SelectTechnician"
-            android:label="SELECT TECHNICIANS">
-
-        </activity>
+            android:label="SELECT TECHNICIANS"></activity>
         <activity
             android:name=".Cart"
-            android:label="CART">
-
-        </activity>
+            android:label="CART"></activity>
         <activity
             android:name=".Drawer"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.SplashScreen"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
