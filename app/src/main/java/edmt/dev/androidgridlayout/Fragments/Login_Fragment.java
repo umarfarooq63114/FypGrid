@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,18 +24,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edmt.dev.androidgridlayout.Custom.CustomToast;
 import edmt.dev.androidgridlayout.Drawer;
 import edmt.dev.androidgridlayout.R;
+import edmt.dev.androidgridlayout.Retrofit.GetRetrofit;
 import edmt.dev.androidgridlayout.Retrofit.RetrofitClient;
+import edmt.dev.androidgridlayout.Technician;
+import edmt.dev.androidgridlayout.TechnicianAdapter;
+import edmt.dev.androidgridlayout.TechnicianList;
 import edmt.dev.androidgridlayout.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Login_Fragment extends Fragment implements OnClickListener {
     private  View view;
+    ArrayList<Technician> own;
+    private RetrofitClient apiInterface;
     String token = "";
     private EditText emailid, password;
     private Button loginButton;
@@ -43,6 +55,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     private LinearLayout loginLayout;
     private Animation shakeAnimation;
     private FragmentManager fragmentManager;
+    TechnicianList list;
 
     public Login_Fragment() {
 
@@ -54,6 +67,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         view = inflater.inflate(R.layout.login_layout, container, false);
         initViews();
         setListeners();
+        own = new ArrayList<>();
         return view;
     }
 
@@ -152,8 +166,8 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     // Check Validation before login
     private void checkValidation() {
         // Get email id and password
-        String getEmailId = emailid.getText().toString();
-        String getPassword = password.getText().toString();
+        final String getEmailId = emailid.getText().toString();
+        final String getPassword = password.getText().toString();
         // Check patter for email id
         Pattern p = Pattern.compile(Utils.regEx);
 
@@ -176,9 +190,47 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         else {
 
 
-            Intent intent = new Intent(getContext(), Drawer.class);
-            intent.putExtra("token", token);
-            startActivity(intent);
+            // getting values from api
+            final EditText user_name=view.findViewById(R.id.login_emailid);
+            final EditText login_password=view.findViewById(R.id.login_password);
+            apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+            Call<List<Technician>> cal = apiInterface.getLostThings();
+            RetrofitClient apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+            cal.enqueue(new Callback<List<Technician>>() {
+                @Override
+                public void onResponse(Call<List<Technician>> call, Response<List<Technician>> response) {
+                    List<Technician> list = response.body();
+                    if (response.isSuccessful()) {
+
+                        for (int i = 1; i < list.size(); i++) {
+                            if (user_name.getText().toString().equals(list.get(i).getEmail())
+                                    && login_password.getText().toString().equals(list.get(i).getPassword())) {
+                                startActivity((new Intent(getActivity(), Drawer.class)));
+                                break;
+                            }
+
+
+                            //Toast.makeText(getActivity(), "connection successfull", Toast.LENGTH_SHORT).show();
+                            new CustomToast().Show_Toast(getActivity(), view,
+                                    "connection successfull");
+                            Log.d("MTAG", "onResponse: is successfully: " + response.body());
+
+
+                        }
+
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<Technician>> call, Throwable t) {
+                    Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                    Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+                //Intent intent = new Intent(getContext(), Drawer.class);
+            //intent.putExtra("token", token);
+            //startActivity(intent);
 
                     // else{
                 //Toast.makeText(getContext(), "Username or Password is incorrect!" +response.message(), Toast.LENGTH_SHORT).show();

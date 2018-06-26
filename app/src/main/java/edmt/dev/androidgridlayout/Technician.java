@@ -22,13 +22,18 @@ public class Technician {
 
     @SerializedName("specaility_id")
     int specaility_id;
+    @SerializedName("password")
+    String password;
 
 
-    public Technician(String t_name, String cnic, String address, String email, int status, String phone, String experience, double rating, int specaility_id) {
+    public Technician(String t_name, String cnic, String address,
+                      String email,String password, int status, String phone,
+                      String experience, double rating, int specaility_id) {
         this.t_name = t_name;
         this.cnic = cnic;
         this.address = address;
         this.email = email;
+        this.password=password;
         this.status = status;
         this.phone = phone;
         this.experience = experience;
@@ -69,6 +74,7 @@ public class Technician {
         return rating;
     }
 
+    public String getPassword() { return password; }
 
     public int getSpeciality() {
         return specaility_id;
