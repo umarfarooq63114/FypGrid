@@ -1,7 +1,11 @@
 package edmt.dev.androidgridlayout.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Brands {
+    @SerializedName("brand_name")
     String brand_name;
+    @SerializedName("item_id")
     int item_id;
 
     public Brands(String brand_name, int item_id) {

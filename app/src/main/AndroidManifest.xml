@@ -15,38 +15,52 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="MAIN"></activity>
+            android:label="MAIN">
+
+        </activity>
         <activity
             android:name=".DeviceDetails"
-            android:label="DEVICE DETAILS"></activity>
+            android:label="DEVICE DETAILS">
+
+        </activity>
         <activity
             android:name=".TechnicianList"
-            android:label="TECHNICIANS LIST"></activity>
+            android:label="TECHNICIANS LIST">
+
+        </activity>
         <activity
             android:name=".TechnicianDetail"
             android:label="TECHNICIANS DETAILS"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
         <activity
             android:name=".SelectTechnician"
-            android:label="SELECT TECHNICIANS"></activity>
+            android:label="SELECT TECHNICIANS">
+
+        </activity>
         <activity
             android:name=".Cart"
-            android:label="CART"></activity>
+            android:label="CART">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Drawer"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".Activities.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".Activities.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

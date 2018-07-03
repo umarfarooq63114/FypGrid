@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GetRetrofit {
 
-    public static final String BASE_URL = "http://192.168.43.127/crudwithapi/public/api/";
+    public static final String BASE_URL = "http://172.20.126.83/crudwithapi/public/api/";
     private static Retrofit retrofit;
     static {
         OkHttpClient.Builder builder=new OkHttpClient.Builder();
