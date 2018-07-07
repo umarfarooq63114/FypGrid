@@ -125,7 +125,7 @@ public class Cart extends AppCompatActivity {
                                 "11:12:12","2018-02-11");*/
 
 
-                            RetrofitClient apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+                            RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
                             Call<BookService> call = apiInterface.postBookService(bookService);
                             call.enqueue(new Callback<BookService>() {
                                 @Override
@@ -178,11 +178,10 @@ public class Cart extends AppCompatActivity {
             case Date_id:
 
                 // set date picker as current date
-                DatePickerDialog _date =   new DatePickerDialog(this, date_listener, year,month,
-                        day){
+                DatePickerDialog _date = new DatePickerDialog(this, date_listener, year, month,
+                        day) {
                     @Override
-                    public void onDateChanged(DatePicker view, int myear, int monthOfYear, int dayOfMonth)
-                    {
+                    public void onDateChanged(DatePicker view, int myear, int monthOfYear, int dayOfMonth) {
                         if (myear < year)
                             view.updateDate(year, month, day);
 
@@ -191,12 +190,13 @@ public class Cart extends AppCompatActivity {
 
                         if (dayOfMonth < day && myear == year && monthOfYear == month)
                             view.updateDate(year, month, day);
+
                     }
                 };
                 return _date;
 
 
-                // Open the datepicker dialog
+            // Open the datepicker dialog
              /*   DatePickerDialog dat = new DatePickerDialog(Cart.this, date_listener, year,
                         month, day);
 
@@ -205,21 +205,14 @@ public class Cart extends AppCompatActivity {
 
             case Time_id:
 
-
-                TimePickerDialog _time =   new TimePickerDialog(this, time_listener, hour,minute,true){
-                    @Override
-                    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                        if(hourOfDay < hour)
-                        onTimeChanged(view, hourOfDay, minute);
-                    }
-                };
-                return _time;
-
-
-
                 // Open the timepicker dialog
-                //return new TimePickerDialog(Cart.this, time_listener, hour,
-                  //      minute, false);
+                //TimePickerDialog _time=new TimePickerDialog(this,time_listener,hour,minute,sec){
+
+
+
+
+                return new TimePickerDialog(Cart.this, time_listener, hour,
+                        minute, false);
 
         }
         return null;
@@ -227,30 +220,31 @@ public class Cart extends AppCompatActivity {
 
 
     // Date picker dialog
-    DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener date_listener = new DatePickerDialog.OnDateSetListener() {
 
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // store the data in one string and set it to text
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                // store the data in one string and set it to text
 
-            date1 = String.valueOf(day) + "-" + String.valueOf(month+1)
-                    + "-" + String.valueOf(year);
-            set_date.setText(date1);
+                date1 = String.valueOf(day) + "-" + String.valueOf(month + 1)
+                        + "-" + String.valueOf(year);
+                set_date.setText(date1);
 
             /*date1 = String.valueOf(month) + "/" + String.valueOf(day)
                     + "/" + String.valueOf(year);
             set_date.setText(date1);*/
-        }
-    };
-    TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
+            }
+        };
+        TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
 
-        @Override
-        public void onTimeSet(TimePicker view, int hour, int minute) {
-            // store the data in one string and set it to text
-            time1 = String.valueOf(hour) + ":" + String.valueOf(minute) + ":20";
-            set_time.setText(time1);
-        }
-    };
+            @Override
+            public void onTimeSet(TimePicker view, int hour, int minute) {
+                // store the data in one string and set it to text
+                time1 = String.valueOf(hour) + ":" + String.valueOf(minute) + ":20";
+                set_time.setText(time1);
+            }
+        };
 
 
-}
+    }
+

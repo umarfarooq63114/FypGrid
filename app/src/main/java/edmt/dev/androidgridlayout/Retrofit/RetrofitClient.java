@@ -4,7 +4,9 @@ import java.util.List;
 import edmt.dev.androidgridlayout.Model.BookService;
 import edmt.dev.androidgridlayout.Model.Brands;
 import edmt.dev.androidgridlayout.Model.Category;
+import edmt.dev.androidgridlayout.Model.Customer;
 import edmt.dev.androidgridlayout.Model.Items;
+import edmt.dev.androidgridlayout.Model.Login;
 import edmt.dev.androidgridlayout.Technician;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,8 +28,14 @@ public interface RetrofitClient
     @GET("items")
     Call<List<Items>> getItemList();
 
+    @POST("login/user")
+    Call<Customer> login(@Body Login login);
+
+
     @GET("brands")
     Call<List<Brands>> getItemBrands();
+    @POST("register/user")
+    Call<Customer> postCustomer(@Body Customer customer);
 
     @POST("bookservice")
     Call<BookService> postBookService(@Body BookService bookService);

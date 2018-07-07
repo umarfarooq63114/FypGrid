@@ -80,9 +80,9 @@ public class Drawer extends AppCompatActivity
             }
         });
 
-        apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+        apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         Call<List<Category>> cal = apiInterface.getCategoriesList();
-        RetrofitClient apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+        RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         cal.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {

@@ -100,9 +100,9 @@ public class TechnicianList extends AppCompatActivity {
         });
         // getting values from api
 
-        apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+        apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         Call<List<Technician>> cal = apiInterface.getLostThings();
-        RetrofitClient apiInterface = GetRetrofit.getRetrofit().create(RetrofitClient.class);
+        RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         cal.enqueue(new Callback<List<Technician>>() {
             @Override
             public void onResponse(Call<List<Technician>> call, Response<List<Technician>> response) {

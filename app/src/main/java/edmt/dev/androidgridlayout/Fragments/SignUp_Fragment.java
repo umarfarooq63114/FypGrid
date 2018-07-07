@@ -13,11 +13,20 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edmt.dev.androidgridlayout.Activities.MainActivity;
+import edmt.dev.androidgridlayout.Cart;
 import edmt.dev.androidgridlayout.Custom.CustomToast;
+import edmt.dev.androidgridlayout.Model.BookService;
+import edmt.dev.androidgridlayout.Model.Customer;
 import edmt.dev.androidgridlayout.R;
+import edmt.dev.androidgridlayout.Retrofit.GetRetrofit;
+import edmt.dev.androidgridlayout.Retrofit.RetrofitClient;
 import edmt.dev.androidgridlayout.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUp_Fragment extends Fragment implements OnClickListener {
     private View view;
@@ -126,6 +135,31 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                     "Please select Terms and Conditions.");
         else {
 
+
+            Customer customer = new Customer("" + getFullName,
+                    "" + getEmailId, "" + getMobileNumber, ""+getLocation,
+                    "" + getPassword);
+
+/*Customer customer=new Customer("abc","abc@gmail.com",
+                            "03212344","lahore",
+        "123456");*/
+
+            RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+            Call<Customer> call = apiInterface.postCustomer(customer);
+            call.enqueue(new Callback<Customer>() {
+                @Override
+                public void onResponse(Call<Customer> call, Response<Customer> response) {
+                    Toast.makeText(getActivity(), "Request successfully submitted", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onFailure(Call<Customer> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Request Failed", Toast.LENGTH_SHORT).show();
+
+
+                }
+            });
         }
     }
 }
