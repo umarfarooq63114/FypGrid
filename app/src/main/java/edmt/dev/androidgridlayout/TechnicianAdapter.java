@@ -28,9 +28,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static edmt.dev.androidgridlayout.TechnicianList.technicianPic;
 
 
 public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.ViewHolder> {
@@ -76,8 +80,11 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
 
         holder.technicianName.setText(users.get(position).getName());
         //holder.technicianName.setText(users.get(position).getName());
-        //holder.technicianCategory.setText(users.get(position).getCategory());
-       // holder.technicianImage.setImageResource(users.get(position).getImage());
+        holder.technicianCategory.setText(users.get(position).getSpecName());
+        //holder.technicianImage.setImageResource(technicianPic);
+        Picasso.with(context).load( users.get(position).getImage())
+                .resize(250,250)
+                .into(holder.technicianImage);
         holder.ratingBar.setRating((float) users.get(position).getRating());
         //holder.technicianCategory.setText(users.get(position).get());
          int x= users.get(position).getStatus();
@@ -110,6 +117,9 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
                 intent.putExtra("exp", users.get(position).getExperience());
                  ratingValue= ((float) users.get(position).getRating());
                 intent.putExtra("rat",users.get(position).getRating());
+                intent.putExtra("spec",users.get(position).getSpecName());
+                intent.putExtra("id",users.get(position).getId());
+                intent.putExtra("img",users.get(position).getImage());
                 intent.putExtra("add",users.get(position).getAddress());
                 context.startActivity(intent);
 
@@ -229,9 +239,9 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            //technicianImage = itemView.findViewById(R.id.img);
+            technicianImage = itemView.findViewById(R.id.t_img);
             technicianName = itemView.findViewById(R.id.tName);
-            //technicianCategory = itemView.findViewById(R.id.tCategory);
+            technicianCategory = itemView.findViewById(R.id.tCategory);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             recyclerViewList = itemView.findViewById(R.id.recyclerViewList);
             technicianCategory = itemView.findViewById(R.id.tCategory);

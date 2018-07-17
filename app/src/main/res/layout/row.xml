@@ -28,7 +28,7 @@ android:id="@+id/recyclerViewList"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img"
+            android:id="@+id/t_img"
 
             android:layout_width="56dp"
             android:layout_height="56dp"

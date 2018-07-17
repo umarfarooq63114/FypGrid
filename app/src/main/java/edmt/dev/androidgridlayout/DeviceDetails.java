@@ -6,8 +6,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,11 +15,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import edmt.dev.androidgridlayout.Model.Faults;
+import edmt.dev.androidgridlayout.Model.Items;
+import edmt.dev.androidgridlayout.Retrofit.GetRetrofit;
+import edmt.dev.androidgridlayout.Retrofit.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DeviceDetails extends Activity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinner1, spinner2, spinner3;
     private Button btnSubmit;
     int a;
+    private RetrofitClient apiInterface;
+    ArrayList<Faults> own;
     TextView tvModel, tvDefect, tvName;
 
     String a1;
@@ -34,6 +44,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
         tvModel = findViewById(R.id.tvModel);
         tvName = findViewById(R.id.tvName);
         tvDefect = findViewById(R.id.tvDefect);
+
 
         spinner2 = findViewById(R.id.spinner2);
         Intent intent = getIntent();
@@ -53,36 +64,81 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
     public void addItemsOnSpinner1() {
 
         spinner1 = (Spinner) findViewById(R.id.spinner1);
-        List<String> deviceModel = new ArrayList<String>();
+        final List<String> deviceModel = new ArrayList<String>();
+
+        //final List<String> deviceModel = new ArrayList<String>();
+        apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        Call<List<Items>> cal = apiInterface.getItemList();
+        RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        cal.enqueue(new Callback<List<Items>>() {
+            @Override
+            public void onResponse(Call<List<Items>> call, Response<List<Items>> response) {
+                List<Items> list = response.body();
+                if (response.isSuccessful()) {
+                     int z=a;
+                    for (int i = 0; i < list.size(); i++) {
+                        String name = list.get(i).getItem_name();
+                        int id = list.get(i).getCategory_id();
+                        if (id == (z+1)) {
+                            deviceModel.add("" + name);
+                        }
+                    }
+                    //Toast.makeText(DeviceDetails.this, "connection successfull"+list.get(0).getItem_name(), Toast.LENGTH_SHORT).show();
+                    Log.d("MTAG", "onResponse: is successfully: " + response.body());
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(DeviceDetails.this,
+                            android.R.layout.simple_spinner_item, deviceModel);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner1.setAdapter(dataAdapter);
+
+                }
+
+
+            }
+
+
+            @Override
+            public void onFailure(Call<List<Items>> call, Throwable t) {
+                Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                Toast.makeText(DeviceDetails.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+
+
         if (a == 0) {
             tvModel.setText("Select Mobile Model");
-            deviceModel.add("SAMSUNG");
+
+            /*deviceModel.add("SAMSUNG");
             deviceModel.add("APPLE");
             deviceModel.add("HUAWEI");
             deviceModel.add("HTC");
-            deviceModel.add("QMOBILE");
+            deviceModel.add("QMOBILE");*/
 
         }
         if (a == 1) {
             tvModel.setText("Select Laptop Model");
-            deviceModel.add("DELL");
+            /*deviceModel.add("DELL");
             deviceModel.add("HP");
             deviceModel.add("LENOVO");
             deviceModel.add("APPLE");
-            deviceModel.add("ACER");
+            deviceModel.add("ACER");*/
 
         } else if (a == 2) {
             tvModel.setText("Select Television Model");
-            deviceModel.add("SONY");
+           /* deviceModel.add("SONY");
             deviceModel.add("LG");
             deviceModel.add("SAMSUNG");
-            deviceModel.add("PANASONIC");
+            deviceModel.add("PANASONIC");*/
 
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+       /* ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, deviceModel);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(dataAdapter);
+        spinner1.setAdapter(dataAdapter);*/
 
     }
 
@@ -90,12 +146,46 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
     public void addItemsOnSpinner3() {
 
         spinner3 = (Spinner) findViewById(R.id.spinner3);
-        List<String> deviceIssue = new ArrayList<String>();
+        final List<String> deviceIssue = new ArrayList<String>();
 
         if(a==0) {tvDefect.setText("Select Mobile Defects");} else if(a==1){tvDefect.setText("Select Laptop Defects");}
         if(a==2) {tvDefect.setText("Select Television Defects");}
 
-        if (a == 0 || a == 1) {
+        own = new ArrayList<>();
+
+        apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        Call<List<Faults>> cal = apiInterface.getFaultList();
+        RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        cal.enqueue(new Callback<List<Faults>>() {
+            @Override
+            public void onResponse(Call<List<Faults>> call, Response<List<Faults>> response) {
+                List<Faults> list = response.body();
+                if (response.isSuccessful()) {
+                    for (int i = 0; i < list.size(); i++) {
+                        String name = list.get(i).getFault_name();
+                        deviceIssue.add("" + name);
+
+                    }
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(DeviceDetails.this,
+                            android.R.layout.simple_spinner_item, deviceIssue);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner3.setAdapter(dataAdapter);
+                }
+            }
+
+                @Override
+                public void onFailure(Call<List<Faults>> call, Throwable t) {
+                    Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                    Toast.makeText(DeviceDetails.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+
+
+
+       /* if (a == 0 || a == 1) {
             deviceIssue.add("Screen Broken");
             deviceIssue.add("Mic Issue");
             deviceIssue.add("On/Off issue");
@@ -112,13 +202,10 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
             deviceIssue.add("Speaker issue");
             deviceIssue.add("Channels");
             deviceIssue.add("Other Internal Issue");
-        }
+        }*/
 
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, deviceIssue);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner3.setAdapter(dataAdapter);
+
     }
 
 
@@ -166,8 +253,11 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
 
         // for mobile drop down
 
+        if(a==0) {tvName.setText("Select Mobile Name");} else if(a==1){tvName.setText("Select Laptop Name");}
+        if(a==2) {tvName.setText("Select Television Name");}
+
         if (a == 0) {
-            tvName.setText("Select Mobile Name");
+           // tvName.setText("Select Mobile Name");
             if (i == 0) {
                 deviceName.add("GALAXY S Series");
                 deviceName.add("GALAXY J Series");
@@ -202,7 +292,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
         // for laptop drop down
 
         if (a == 1) {
-            tvName.setText("Select Laptop Name");
+            //tvName.setText("Select Laptop Name");
             if (i == 0 || i == 1 || i == 2 || i == 3) {
                 deviceName.add("i3");
                 deviceName.add("i5");
@@ -215,7 +305,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
 
         if (a == 2) {
             if (i == 0 || i == 1 || i == 2 || i == 3) {
-                tvName.setText("Select Television Name");
+                //tvName.setText("Select Television Name");
                 deviceName.add("Flat Panel");
                 deviceName.add("LCD");
                 deviceName.add("LED");

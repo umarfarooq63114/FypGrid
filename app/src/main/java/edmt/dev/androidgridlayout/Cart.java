@@ -33,11 +33,12 @@ import static edmt.dev.androidgridlayout.DeviceDetails.dev_defects;
 import static edmt.dev.androidgridlayout.DeviceDetails.dev_model;
 import static edmt.dev.androidgridlayout.DeviceDetails.dev_name;
 import static edmt.dev.androidgridlayout.TechnicianDetail.name;
+import static edmt.dev.androidgridlayout.TechnicianDetail.technician_id;
 
 public class Cart extends AppCompatActivity {
     Dialog dialog;
 
-    Button cancel, ok;
+    Button cancel, finalButton;
     TextView itemName, brandName, fault, technicianName, Time, dDate, dName;
 
     private static Button date, time;
@@ -92,18 +93,18 @@ public class Cart extends AppCompatActivity {
                     Time = dialog.findViewById(R.id.Time);
                     dDate = dialog.findViewById(R.id.Date);
                     cancel = dialog.findViewById(R.id.cancel);
-                    ok = dialog.findViewById(R.id.ok);
+                    finalButton = dialog.findViewById(R.id.finalButton);
 
-                    itemName.setText(dev_name);
-                    brandName.setText(dev_model);
-                    fault.setText(dev_defects);
-                    technicianName.setText(name);
-                    Time.setText(time1);
-                    dDate.setText(date1);
+                    itemName.setText(""+dev_name);
+                    brandName.setText(""+dev_model);
+                    fault.setText(""+dev_defects);
+                    technicianName.setText(""+name);
+                    Time.setText(""+time1);
+                    dDate.setText(""+date1);
                     dialog.show();
 
 
-                    ok.setOnClickListener(new View.OnClickListener() {
+                    finalButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             itemName = dialog.findViewById(R.id.itemName);
@@ -112,16 +113,16 @@ public class Cart extends AppCompatActivity {
                             technicianName = dialog.findViewById(R.id.technicianName);
                             Time = dialog.findViewById(R.id.Time);
                             dDate = dialog.findViewById(R.id.Date);
-
-
+                            Toast.makeText(Cart.this, ""+itemName.getText().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Cart.this, "Date: "+date1+"\nTime: "+time1, Toast.LENGTH_SHORT).show();
                             BookService bookService = new BookService("" + itemName.getText().toString(),
                                     "" + brandName.getText().toString(), "" + fault.getText().toString(),
-                                    (2),
+                                    (technician_id),
                                     "" + Time.getText().toString(),
                                     "" + dDate.getText().toString());
 
-                        /*BookService bookService= new BookService("iphone","5S"
-                                ,"Screen broken",2,
+                      /*  BookService bookService= new BookService("iphone","8S"
+                                ,"Screen broken",1,
                                 "11:12:12","2018-02-11");*/
 
 
@@ -226,8 +227,8 @@ public class Cart extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 // store the data in one string and set it to text
 
-                date1 = String.valueOf(day) + "-" + String.valueOf(month + 1)
-                        + "-" + String.valueOf(year);
+                date1 = String.valueOf(year) + "-" + String.valueOf(month + 1)
+                        + "-" + String.valueOf(day);
                 set_date.setText(date1);
 
             /*date1 = String.valueOf(month) + "/" + String.valueOf(day)

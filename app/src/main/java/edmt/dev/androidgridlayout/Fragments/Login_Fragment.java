@@ -59,7 +59,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     private FragmentManager fragmentManager;
     TechnicianList list;
 
-    public Login_Fragment() {
+     public Login_Fragment() {
 
     }
 
@@ -190,32 +190,32 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         }
 
         else {
-            RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
-            Login login = new Login(getEmailId, getPassword);
-            Call<Customer> call = apiInterface.login(login);
+        RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        Login login = new Login(getEmailId, getPassword);
+        Call<Customer> call = apiInterface.login(login);
 
-            call.enqueue(new Callback<Customer>() {
-                @Override
-                public void onResponse( Call<Customer> call,  Response<Customer> response) {
-                    if (response.isSuccessful()) {
-                        token = response.body().getToken();
-                        Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(), Drawer.class);
-                        intent.putExtra("token", token);
-                        startActivity(intent);
+        call.enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse( Call<Customer> call,  Response<Customer> response) {
+                if (response.isSuccessful()) {
+                    token = response.body().getToken();
+                    Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), Drawer.class);
+                    intent.putExtra("token", token);
+                    startActivity(intent);
 
-                    } else {
-                        Toast.makeText(getContext(), "Username or Password is incorrect!" +response.message(), Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Toast.makeText(getContext(), "Username or Password is incorrect!" +response.message(), Toast.LENGTH_SHORT).show();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<Customer> call, Throwable t) {
-                    Toast.makeText(getContext(), "Issue in method"+t.getLocalizedMessage()+t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
+                Toast.makeText(getContext(), "Issue in method"+t.getLocalizedMessage()+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+}
 
 
 

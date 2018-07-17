@@ -5,6 +5,7 @@ import edmt.dev.androidgridlayout.Model.BookService;
 import edmt.dev.androidgridlayout.Model.Brands;
 import edmt.dev.androidgridlayout.Model.Category;
 import edmt.dev.androidgridlayout.Model.Customer;
+import edmt.dev.androidgridlayout.Model.Faults;
 import edmt.dev.androidgridlayout.Model.Items;
 import edmt.dev.androidgridlayout.Model.Login;
 import edmt.dev.androidgridlayout.Technician;
@@ -31,6 +32,8 @@ public interface RetrofitClient
     @POST("login/user")
     Call<Customer> login(@Body Login login);
 
+    @GET("faults")
+    Call<List<Faults>> getFaultList();
 
     @GET("brands")
     Call<List<Brands>> getItemBrands();

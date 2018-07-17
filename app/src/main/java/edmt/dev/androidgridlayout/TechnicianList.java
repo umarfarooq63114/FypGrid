@@ -57,6 +57,7 @@ import retrofit2.Response;
 
 public class TechnicianList extends AppCompatActivity {
     ArrayList<Technician> own;
+    static int technicianPic;
     private RecyclerView recyclerView;
     private RetrofitClient apiInterface;
     private TechnicianAdapter technicianAdapter;
@@ -108,9 +109,14 @@ public class TechnicianList extends AppCompatActivity {
             public void onResponse(Call<List<Technician>> call, Response<List<Technician>> response) {
                 List<Technician> list = response.body();
                 if (response.isSuccessful()) {
-                    for (Technician x : list) {
+
+                    for ( Technician x: list) {
+
                         own.add(x);
+                        //technicianPic=((int) own.get(i).getImage());
+                        
                     }
+
                     Toast.makeText(TechnicianList.this, "connection successfull", Toast.LENGTH_SHORT).show();
                     Log.d("MTAG", "onResponse: is successfully: " + response.body());
 

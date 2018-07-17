@@ -1,21 +1,17 @@
 package edmt.dev.androidgridlayout;
 
-import android.app.Dialog;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,10 +20,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import edmt.dev.androidgridlayout.Fragments.Login_Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +36,7 @@ import retrofit2.Response;
 
 public class Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private static FragmentManager fragmentManager;
     ArrayList<Category> own;
     private RecyclerView recyclerView;
     private RetrofitClient apiInterface;
@@ -54,6 +49,7 @@ public class Drawer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        fragmentManager = getSupportFragmentManager();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -194,23 +190,33 @@ public class Drawer extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("ResourceType")
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
+            startActivity(new Intent(Drawer.this,Drawer.class));
+        } else if (id == R.id.nav_technician) {
+            startActivity(new Intent(Drawer.this,TechnicianList.class));
+        } else if (id == R.id.nav_cart) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
+            // If savedinstnacestate is null then replace login fragment
+
+               /* fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frameContainer, new Login_Fragment(),
+                                Utils.Login_Fragment).commit();*/
+            Toast.makeText(this, "Hi baby", Toast.LENGTH_SHORT).show();
+
+
 
         }
 
