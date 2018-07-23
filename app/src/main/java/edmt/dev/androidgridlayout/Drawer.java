@@ -3,6 +3,7 @@ package edmt.dev.androidgridlayout;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -20,28 +21,42 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import edmt.dev.androidgridlayout.Fragments.Login_Fragment;
+import com.squareup.picasso.Picasso;
+
+import edmt.dev.androidgridlayout.Activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edmt.dev.androidgridlayout.Model.Category;
+import edmt.dev.androidgridlayout.Model.Customer;
 import edmt.dev.androidgridlayout.Retrofit.GetRetrofit;
 import edmt.dev.androidgridlayout.Retrofit.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static edmt.dev.androidgridlayout.Fragments.Login_Fragment.UsergetEmailId;
+
 public class Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static FragmentManager fragmentManager;
     ArrayList<Category> own;
+
+    String userEmaiId;
+    ArrayList<String> own1;
     private RecyclerView recyclerView;
     private RetrofitClient apiInterface;
     private MainAdapter mainAdapter;
+    public int z;
+    String token = "";
+    public String imagage;
     SwipeRefreshLayout swipeRefreshLayout;
+    ImageView imageView;
+    Toolbar signout;
 
     ActionBar actionBar;
 
@@ -49,19 +64,40 @@ public class Drawer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        imageFun();
         fragmentManager = getSupportFragmentManager();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        imageView = findViewById(R.id.user_image);
+
+       /* signout=findViewById(R.id.action_logout);
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences=getSharedPreferences("My",MODE_PRIVATE);
+                //sharedPreferences.edit().putString("user",getIntent().getStringExtra("user")).clear();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                finish();
+                startActivity(new Intent(Drawer.this,MainActivity.class));
+
+            }
+        });*/
+
+        SharedPreferences sharedPreferences = getSharedPreferences("My", MODE_PRIVATE);
+        sharedPreferences.edit().putString("user", getIntent().getStringExtra("user")).apply();
 
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         own = new ArrayList<>();
+        own1 = new ArrayList<String>();
         recyclerView.setLayoutManager(new LinearLayoutManager(Drawer.this));
         recyclerView.setHasFixedSize(true);
 
         // getting values from api
 
-        swipeRefreshLayout=findViewById(R.id.swipe);
+        swipeRefreshLayout = findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -72,7 +108,7 @@ public class Drawer extends AppCompatActivity
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                },2000);
+                }, 2000);
             }
         });
 
@@ -90,7 +126,7 @@ public class Drawer extends AppCompatActivity
                     Toast.makeText(Drawer.this, "connection successfull", Toast.LENGTH_SHORT).show();
                     Log.d("MTAG", "onResponse: is successfully: " + response.body());
 
-                    mainAdapter = new MainAdapter(Drawer.this,own);
+                    mainAdapter = new MainAdapter(Drawer.this, own);
                     recyclerView.setAdapter(mainAdapter);
                 }
 
@@ -104,27 +140,13 @@ public class Drawer extends AppCompatActivity
         });
 
 
+        Intent intent = getIntent();
+        if (null != intent) { //Null Checking
+            userEmaiId = intent.getStringExtra("email");
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      //  mainGrid = (GridLayout) findViewById(R.id.mainGrid);
+        //  mainGrid = (GridLayout) findViewById(R.id.mainGrid);
 
         //Set Event
         //setSingleEvent(mainGrid);
@@ -140,13 +162,51 @@ public class Drawer extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+
+    public void imageFun() {
+        apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        Call<List<Customer>> call = apiInterface.getCustomerList();
+        RetrofitClient apiInterfac = GetRetrofit.getInstance().create(RetrofitClient.class);
+
+        call.enqueue(new Callback<List<Customer>>() {
+            @Override
+            public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+                List<Customer> list = response.body();
+                if (response.isSuccessful()) {
+
+
+                    for (int i = 0; i < list.size(); i++) {
+
+                        if (list.get(i).getEmail().equals(UsergetEmailId)) {
+                            imagage = list.get(i).getImage();
+
+                        }
+                    }
+
+
+                    Toast.makeText(Drawer.this, "Image lagny lagi ....connection successfull", Toast.LENGTH_SHORT).show();
+                    Log.d("MTAG", "onResponse: is successfully: " + response.body());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Customer>> call, Throwable t) {
+                Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                Toast.makeText(Drawer.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            final AlertDialog.Builder builder=new AlertDialog.Builder(Drawer.this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(Drawer.this);
             builder.setMessage("Are you sure to quit?");
             builder.setCancelable(true);
             builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -162,7 +222,7 @@ public class Drawer extends AppCompatActivity
                     finish();
                 }
             });
-            AlertDialog alertDialog=builder.create();
+            AlertDialog alertDialog = builder.create();
             alertDialog.show();
 
         }
@@ -198,9 +258,13 @@ public class Drawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            startActivity(new Intent(Drawer.this,Drawer.class));
+            startActivity(new Intent(Drawer.this, Drawer.class));
+        } else if (id == R.id.user_image) {
+            Picasso.with(Drawer.this).load(imagage)
+                    .resize(100, 100)
+                    .into(imageView);
         } else if (id == R.id.nav_technician) {
-            startActivity(new Intent(Drawer.this,TechnicianList.class));
+            startActivity(new Intent(Drawer.this, TechnicianList.class));
         } else if (id == R.id.nav_cart) {
 
         } else if (id == R.id.nav_setting) {
@@ -209,13 +273,18 @@ public class Drawer extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             // If savedinstnacestate is null then replace login fragment
-
+            SharedPreferences sharedPreferences = getSharedPreferences("My", MODE_PRIVATE);
+            //sharedPreferences.edit().putString("user",getIntent().getStringExtra("user")).clear();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+            finish();
+            startActivity(new Intent(Drawer.this, MainActivity.class));
                /* fragmentManager
                         .beginTransaction()
                         .replace(R.id.frameContainer, new Login_Fragment(),
                                 Utils.Login_Fragment).commit();*/
-            Toast.makeText(this, "Hi baby", Toast.LENGTH_SHORT).show();
-
+            //Toast.makeText(this, "Hi baby", Toast.LENGTH_SHORT).show();
 
 
         }

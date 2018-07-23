@@ -30,6 +30,10 @@ public class Technician {
     String image;
     @SerializedName("name")
     String name;
+    @SerializedName("distance")
+    String distance;
+
+
 
     public Technician(String t_name, String cnic, String address,
                       String email,String password, int status, String phone,
@@ -48,9 +52,19 @@ this.image=image;
         this.specaility_id = specaility_id;
     }
 
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
     public String getName() {
         return t_name;
     }
+
     public String getSpecName() {
         return name;
     }

@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import edmt.dev.androidgridlayout.Model.Brands;
 import edmt.dev.androidgridlayout.Model.Faults;
 import edmt.dev.androidgridlayout.Model.Items;
 import edmt.dev.androidgridlayout.Retrofit.GetRetrofit;
@@ -28,13 +29,14 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
     private Spinner spinner1, spinner2, spinner3;
     private Button btnSubmit;
     int a;
-    private RetrofitClient apiInterface;
-    ArrayList<Faults> own;
+    private RetrofitClient apiInterface, apiInterface1;
+    ;
+    ArrayList<Brands> own;
     TextView tvModel, tvDefect, tvName;
 
     String a1;
 
-    static String dev_name,dev_model,dev_defects;
+    static String dev_name, dev_model, dev_defects;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,8 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
         addItemsOnSpinner1();
         addItemsOnSpinner3();
         addListenerOnButton();
-        addListenerOnSpinnerItemSelection();    }
+        addListenerOnSpinnerItemSelection();
+    }
 
     public void addItemsOnSpinner1() {
 
@@ -75,11 +78,11 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
             public void onResponse(Call<List<Items>> call, Response<List<Items>> response) {
                 List<Items> list = response.body();
                 if (response.isSuccessful()) {
-                     int z=a;
+                    int z = a;
                     for (int i = 0; i < list.size(); i++) {
                         String name = list.get(i).getItem_name();
                         int id = list.get(i).getCategory_id();
-                        if (id == (z+1)) {
+                        if (id == (z + 1)) {
                             deviceModel.add("" + name);
                         }
                     }
@@ -102,11 +105,6 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
                 Toast.makeText(DeviceDetails.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
 
 
         if (a == 0) {
@@ -148,10 +146,16 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
         spinner3 = (Spinner) findViewById(R.id.spinner3);
         final List<String> deviceIssue = new ArrayList<String>();
 
-        if(a==0) {tvDefect.setText("Select Mobile Defects");} else if(a==1){tvDefect.setText("Select Laptop Defects");}
-        if(a==2) {tvDefect.setText("Select Television Defects");}
+        if (a == 0) {
+            tvDefect.setText("Select Mobile Defects");
+        } else if (a == 1) {
+            tvDefect.setText("Select Laptop Defects");
+        }
+        if (a == 2) {
+            tvDefect.setText("Select Television Defects");
+        }
 
-        own = new ArrayList<>();
+        own = new ArrayList<Brands>();
 
         apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         Call<List<Faults>> cal = apiInterface.getFaultList();
@@ -166,6 +170,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
                         deviceIssue.add("" + name);
 
                     }
+
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(DeviceDetails.this,
                             android.R.layout.simple_spinner_item, deviceIssue);
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -173,12 +178,12 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
                 }
             }
 
-                @Override
-                public void onFailure(Call<List<Faults>> call, Throwable t) {
-                    Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
-                    Toast.makeText(DeviceDetails.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                }
-            });
+            @Override
+            public void onFailure(Call<List<Faults>> call, Throwable t) {
+                Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                Toast.makeText(DeviceDetails.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
@@ -203,7 +208,6 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
             deviceIssue.add("Channels");
             deviceIssue.add("Other Internal Issue");
         }*/
-
 
 
     }
@@ -234,9 +238,9 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
                                 "\nName : " + String.valueOf(spinner2.getSelectedItem()),
                         Toast.LENGTH_SHORT).show();*/
 
-                dev_model=String.valueOf(spinner1.getSelectedItem());
-                dev_name=String.valueOf(spinner2.getSelectedItem());
-                dev_defects=String.valueOf(spinner3.getSelectedItem());
+                dev_model = String.valueOf(spinner1.getSelectedItem());
+                dev_name = String.valueOf(spinner2.getSelectedItem());
+                dev_defects = String.valueOf(spinner3.getSelectedItem());
                 Intent intent = new Intent(DeviceDetails.this, SelectTechnician.class);
 
 
@@ -248,16 +252,58 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        List<String> deviceName = new ArrayList<String>();
+    public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
+        final List<String> deviceName = new ArrayList<String>();
 
         // for mobile drop down
 
-        if(a==0) {tvName.setText("Select Mobile Name");} else if(a==1){tvName.setText("Select Laptop Name");}
-        if(a==2) {tvName.setText("Select Television Name");}
+        if (a == 0) {
+            tvName.setText("Select Mobile Name");
+        } else if (a == 1) {
+            tvName.setText("Select Laptop Name");
+        }
+        if (a == 2) {
+            tvName.setText("Select Television Name");
+        }
+
+
+
+
+
+       /* apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        Call<List<Brands>> cal = apiInterface.getBrandsList();
+        RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        cal.enqueue(new Callback<List<Brands>>() {
+            @Override
+            public void onResponse(Call<List<Brands>> call, Response<List<Brands>> response) {
+                List<Brands> list = response.body();
+                if (response.isSuccessful()) {
+
+                    for (Brands x : list) {
+
+                        own.add(x);
+                        //technicianPic=((int) own.get(i).getImage());
+
+                    }
+
+                    Toast.makeText(DeviceDetails.this, "connection successfull", Toast.LENGTH_SHORT).show();
+                    Log.d("MTAG", "onResponse: is successfully: " + response.body());
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Brands>> call, Throwable t) {
+                Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
+                Toast.makeText(DeviceDetails.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
 
         if (a == 0) {
-           // tvName.setText("Select Mobile Name");
+            // tvName.setText("Select Mobile Name");
             if (i == 0) {
                 deviceName.add("GALAXY S Series");
                 deviceName.add("GALAXY J Series");
@@ -318,6 +364,8 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
                 android.R.layout.simple_spinner_item, deviceName);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(dataAdapter);
+
+
     }
 
 

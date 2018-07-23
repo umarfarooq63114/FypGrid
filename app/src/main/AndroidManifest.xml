@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edmt.dev.androidgridlayout">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,57 +17,43 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="MAIN">
-
-        </activity>
+            android:label="MAIN" />
         <activity
             android:name=".DeviceDetails"
-            android:label="DEVICE DETAILS">
-
-        </activity>
+            android:label="DEVICE DETAILS" />
         <activity
             android:name=".TechnicianList"
-            android:label="TECHNICIANS LIST">
-
-        </activity>
+            android:label="TECHNICIANS LIST" />
         <activity
             android:name=".TechnicianDetail"
             android:label="TECHNICIANS DETAILS"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".SelectTechnician"
-            android:label="SELECT TECHNICIANS">
-
-        </activity>
-
+            android:label="SELECT TECHNICIANS" />
         <activity
             android:name=".Cart"
-            android:label="CART">
-        </activity>
-
+            android:label="CART" />
         <activity
             android:name=".Drawer"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Activities.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".ReviewsList"></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ReviewsList" />
+        <activity android:name=".Feedback" />
+        <activity android:name=".SearchNearBy" />
+        <activity android:name=".TechnicianearbyList"></activity>
     </application>
 
 </manifest>

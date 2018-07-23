@@ -1,6 +1,7 @@
 package edmt.dev.androidgridlayout.Fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +45,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class Login_Fragment extends Fragment implements OnClickListener {
     private  View view;
@@ -52,6 +55,10 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     String token = "";
     private EditText emailid, password;
     private Button loginButton;
+
+    public static String UsergetEmailId;
+
+
     private TextView forgotPassword, signUp;
     private CheckBox show_hide_password;
     private LinearLayout loginLayout;
@@ -168,15 +175,15 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     // Check Validation before login
     private void checkValidation() {
         // Get email id and password
-        String getEmailId = emailid.getText().toString();
+        UsergetEmailId = emailid.getText().toString();
         String getPassword = password.getText().toString();
         // Check patter for email id
         Pattern p = Pattern.compile(Utils.regEx);
 
-        Matcher m = p.matcher(getEmailId);
+        Matcher m = p.matcher(UsergetEmailId);
 
         // Check for both field is empty or not
-        if (getEmailId.equals("") || getEmailId.length() == 0
+        if (UsergetEmailId.equals("") || UsergetEmailId.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0) {
             loginLayout.startAnimation(shakeAnimation);
             new CustomToast().Show_Toast(getActivity(), view,
@@ -190,8 +197,9 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         }
 
         else {
+            final SharedPreferences sharedPreferences=getActivity().getSharedPreferences("My",MODE_PRIVATE);
         RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
-        Login login = new Login(getEmailId, getPassword);
+        Login login = new Login(UsergetEmailId, getPassword);
         Call<Customer> call = apiInterface.login(login);
 
         call.enqueue(new Callback<Customer>() {
@@ -200,9 +208,25 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                 if (response.isSuccessful()) {
                     token = response.body().getToken();
                     Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), Drawer.class);
-                    intent.putExtra("token", token);
-                    startActivity(intent);
+
+                    if(sharedPreferences.getString("user","").equals(""))
+                    {
+                        Intent intent = new Intent(getContext(), Drawer.class);
+                        intent.putExtra("token", token);
+                        intent.putExtra("email",UsergetEmailId);
+                        intent.putExtra("user",sharedPreferences.getString("user",""));
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        /*Intent intent = new Intent(getContext(), Drawer.class);
+                        intent.putExtra("token", token);
+                        intent.putExtra("user",sharedPreferences.getString("user",""));
+                        startActivity(intent);*/
+                    }
+
+
+
 
                 } else {
                     Toast.makeText(getContext(), "Username or Password is incorrect!" +response.message(), Toast.LENGTH_SHORT).show();

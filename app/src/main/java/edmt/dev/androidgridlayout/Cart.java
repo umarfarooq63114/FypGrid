@@ -141,10 +141,10 @@ public class Cart extends AppCompatActivity {
 
 
                                 }
-                            });
+            });
 
-                        }
-                    });
+        }
+    });
 
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -158,8 +158,7 @@ public class Cart extends AppCompatActivity {
             }
         });
 
-        //}
-        /**/
+
     }
 
     protected Dialog onCreateDialog(int id) {

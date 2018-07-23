@@ -65,6 +65,10 @@ public class SelectTechnician extends AppCompatActivity {
                         Intent intent = new Intent(SelectTechnician.this,TechnicianList.class);
 
                         startActivity(intent);}
+                    if( finalI == 1){
+                        Intent intent = new Intent(SelectTechnician.this,SearchNearBy.class);
+
+                        startActivity(intent);}
 
                 }
             });

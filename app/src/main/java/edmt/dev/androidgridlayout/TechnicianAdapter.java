@@ -40,22 +40,22 @@ import static edmt.dev.androidgridlayout.TechnicianList.technicianPic;
 public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.ViewHolder> {
     private List<Technician> users;
     private Context context;
-   static float ratingValue;
+    static float ratingValue;
     LayoutInflater inflater;
     CardView cardView;
     String stat;
     TextView name;
-    String Tname="Umar";
-    ImageView call,msg,info;
+    String Tname = "Umar";
+    ImageView call, msg, info;
     Dialog dialog;
-        private static final int REQUEST_CALL = 1;
+    private static final int REQUEST_CALL = 1;
     String Tphone;
     int Timage;
 
-    List<CardView>cardViewList = new ArrayList<>();
+    List<CardView> cardViewList = new ArrayList<>();
 
 
-    ArrayList <Technician> arrayList;
+    ArrayList<Technician> arrayList;
 
 
     public TechnicianAdapter(Context context, List<Technician> users) {
@@ -82,24 +82,19 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
         //holder.technicianName.setText(users.get(position).getName());
         holder.technicianCategory.setText(users.get(position).getSpecName());
         //holder.technicianImage.setImageResource(technicianPic);
-        Picasso.with(context).load( users.get(position).getImage())
-                .resize(250,250)
+        Picasso.with(context).load(users.get(position).getImage())
+                .resize(250, 250)
                 .into(holder.technicianImage);
         holder.ratingBar.setRating((float) users.get(position).getRating());
         //holder.technicianCategory.setText(users.get(position).get());
-         int x= users.get(position).getStatus();
-         if(x==1)
-         {
-             stat="Online";
-         }
-         else if(x==0)
-         {
-             stat="Offline";
-         }
+        int x = users.get(position).getStatus();
+        if (x == 1) {
+            stat = "Online";
+        } else if (x == 0) {
+            stat = "Offline";
+        }
 
         holder.status.setText(stat);
-
-
 
 
         holder.recyclerViewList.setOnClickListener(new View.OnClickListener() {
@@ -109,18 +104,16 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
                 intent = new Intent(context, TechnicianDetail.class);
 
 
-            intent.putExtra("name", users.get(position).getName());
-
-               // intent.putExtra("image", users.get(position).getImage());
+                intent.putExtra("name", users.get(position).getName());
                 intent.putExtra("phone", users.get(position).getPhone());
-                intent.putExtra("status", ""+users.get(position).getStatus());
+                intent.putExtra("status", "" + users.get(position).getStatus());
                 intent.putExtra("exp", users.get(position).getExperience());
-                 ratingValue= ((float) users.get(position).getRating());
-                intent.putExtra("rat",users.get(position).getRating());
-                intent.putExtra("spec",users.get(position).getSpecName());
-                intent.putExtra("id",users.get(position).getId());
-                intent.putExtra("img",users.get(position).getImage());
-                intent.putExtra("add",users.get(position).getAddress());
+                ratingValue = ((float) users.get(position).getRating());
+                intent.putExtra("rat", ratingValue);
+                intent.putExtra("spec", users.get(position).getSpecName());
+                intent.putExtra("id", users.get(position).getId());
+                intent.putExtra("img", users.get(position).getImage());
+                intent.putExtra("add", users.get(position).getAddress());
                 context.startActivity(intent);
 
             }
@@ -212,23 +205,21 @@ public class TechnicianAdapter extends RecyclerView.Adapter<TechnicianAdapter.Vi
     }
 
     //filter
-    public void filter(String charText){
+    public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
         users.clear();
-        if (charText.length()==0){
+        if (charText.length() == 0) {
             users.addAll(arrayList);
-        }
-        else {
-            for (Technician technician : arrayList){
+        } else {
+            for (Technician technician : arrayList) {
                 if (technician.getName().toLowerCase(Locale.getDefault())
-                        .contains(charText)){
+                        .contains(charText)) {
                     users.add(technician);
                 }
             }
         }
         notifyDataSetChanged();
     }
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

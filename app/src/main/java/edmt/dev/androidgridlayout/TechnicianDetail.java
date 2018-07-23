@@ -74,7 +74,7 @@ public class TechnicianDetail extends AppCompatActivity {
             add=intent.getStringExtra("add");
             technician_id=intent.getIntExtra("id",9);
             //imag=intent.getExtras().getInt("image");
-            rating=intent.getFloatExtra("rat",4);
+            rating=intent.getFloatExtra("rat",0);
             //imag=intent.getIntExtra("image");
             //ratingbar = intent.getFloatExtra("rating", Float.parseFloat(""));
 
@@ -121,7 +121,7 @@ public class TechnicianDetail extends AppCompatActivity {
 
 
 
-        TratingBar.setRating((float)ratingValue);
+        TratingBar.setRating((float)rating);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

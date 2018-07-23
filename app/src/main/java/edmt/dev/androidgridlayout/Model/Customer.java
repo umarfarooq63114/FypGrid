@@ -1,7 +1,14 @@
 package edmt.dev.androidgridlayout.Model;
 
 public class Customer {
-    String full_name,email,mobile,location,password,api_token,remember_token;
+    String full_name;
+    String email;
+    String mobile;
+    String location;
+    String password;
+    String api_token;
+    String remember_token;
+    public  String image;
 
     public Customer(String full_name, String email, String mobile, String location, String password) {
         this.full_name = full_name;
@@ -57,5 +64,13 @@ public class Customer {
 
     public void setApi_token(String api_token) {
         this.api_token = api_token;
+    }
+
+    public   String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
