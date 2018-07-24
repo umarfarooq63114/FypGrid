@@ -136,13 +136,13 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         else {
 
 
-            Customer customer = new Customer("" + getFullName,
+            /*Customer customer = new Customer("" + getFullName,
                     "" + getEmailId, "" + getMobileNumber, ""+getLocation,
-                    "" + getPassword);
+                    "" + getPassword);*/
 
-/*Customer customer=new Customer("abc","abc@gmail.com",
+Customer customer=new Customer("abc","abbas@gmail.com",
                             "03212344","lahore",
-        "123456");*/
+        "123456");
 
             RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
             Call<Customer> call = apiInterface.postCustomer(customer);

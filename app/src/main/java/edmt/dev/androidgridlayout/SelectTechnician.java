@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
+import edmt.dev.androidgridlayout.Model.TechnicianNearby;
+
 public class SelectTechnician extends AppCompatActivity {
 
     GridLayout mainGrid;

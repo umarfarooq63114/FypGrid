@@ -1,11 +1,21 @@
 package edmt.dev.androidgridlayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -22,6 +32,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -30,6 +41,7 @@ import edmt.dev.androidgridlayout.Activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import edmt.dev.androidgridlayout.Model.Category;
 import edmt.dev.androidgridlayout.Model.Customer;
@@ -50,11 +62,17 @@ public class Drawer extends AppCompatActivity
     ArrayList<String> own1;
     private RecyclerView recyclerView;
     private RetrofitClient apiInterface;
+    private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     private MainAdapter mainAdapter;
+    List<Address> address;
     public int z;
+    Geocoder geocoder;
     String token = "";
+    RelativeLayout rootLayout;
     public String imagage;
+    static String latitude, longitude;
     SwipeRefreshLayout swipeRefreshLayout;
+    LocationManager locationManager;
     ImageView imageView;
     Toolbar signout;
 
@@ -70,20 +88,6 @@ public class Drawer extends AppCompatActivity
         setSupportActionBar(toolbar);
         imageView = findViewById(R.id.user_image);
 
-       /* signout=findViewById(R.id.action_logout);
-        signout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences=getSharedPreferences("My",MODE_PRIVATE);
-                //sharedPreferences.edit().putString("user",getIntent().getStringExtra("user")).clear();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
-                finish();
-                startActivity(new Intent(Drawer.this,MainActivity.class));
-
-            }
-        });*/
 
         SharedPreferences sharedPreferences = getSharedPreferences("My", MODE_PRIVATE);
         sharedPreferences.edit().putString("user", getIntent().getStringExtra("user")).apply();
@@ -295,48 +299,5 @@ public class Drawer extends AppCompatActivity
     }
 
 
-
-   /* private void setToggleEvent(GridLayout mainGrid) {
-        //Loop all child item of Main Grid
-        for (int i = 0; i < mainGrid.getChildCount(); i++) {
-            //You can see , all child item is CardView , so we just cast object to CardView
-            final CardView cardView = (CardView) mainGrid.getChildAt(i);
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (cardView.getCardBackgroundColor().getDefaultColor() == -1) {
-                        //Change background color
-                        cardView.setCardBackgroundColor(Color.parseColor("#FF6F00"));
-                        Toast.makeText(Drawer.this, "State : True", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        //Change background color
-                        cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-                        Toast.makeText(Drawer.this, "State : False", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-    }*/
-
-   /* private void setSingleEvent(GridLayout mainGrid) {
-        //Loop all child item of Main Grid
-        for (int i = 0; i < mainGrid.getChildCount(); i++) {
-            //You can see , all child item is CardView , so we just cast object to CardView
-            CardView cardView = (CardView) mainGrid.getChildAt(i);
-            final int finalI = i;
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if( finalI == 0){
-                        Intent intent = new Intent(Drawer.this,DeviceDetails.class);
-                        intent.putExtra("info","This is activity from card item index  "+finalI);
-                        startActivity(intent);}
-
-                }
-            });
-        }
-    }*/
-
-
 }
+

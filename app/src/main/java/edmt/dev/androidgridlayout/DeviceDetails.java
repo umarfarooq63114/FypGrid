@@ -28,7 +28,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
 
     private Spinner spinner1, spinner2, spinner3;
     private Button btnSubmit;
-    int a;
+    int a,dummy;
     private RetrofitClient apiInterface, apiInterface1;
     ;
     ArrayList<Brands> own;
@@ -54,7 +54,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
         a1 = intent.getExtras().getString("name");
         a = intent.getExtras().getInt("pos");
 
-
+dummy=a;
         //Toast.makeText(this, "vallues a "+a+" a1 "+a1, Toast.LENGTH_SHORT).show();
         //a = Integer.parseInt(a1);
 
@@ -155,7 +155,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
             tvDefect.setText("Select Television Defects");
         }
 
-        own = new ArrayList<Brands>();
+        //own = new ArrayList<Brands>();
 
         apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         Call<List<Faults>> cal = apiInterface.getFaultList();
@@ -252,7 +252,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
+    public void onItemSelected(AdapterView<?> adapterView, View view, final int pos, long l) {
         final List<String> deviceName = new ArrayList<String>();
 
         // for mobile drop down
@@ -268,9 +268,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
 
 
 
-
-
-       /* apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
+        apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         Call<List<Brands>> cal = apiInterface.getBrandsList();
         RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);
         cal.enqueue(new Callback<List<Brands>>() {
@@ -278,20 +276,55 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
             public void onResponse(Call<List<Brands>> call, Response<List<Brands>> response) {
                 List<Brands> list = response.body();
                 if (response.isSuccessful()) {
+                     int temp=a;
+                    for (int i = 0; i < list.size(); i++) {
+                        String name = list.get(i).getBrand_name();
 
-                    for (Brands x : list) {
+                        if(a==0) {
+                            int item_id =list.get(i).getItem_id();
+                                if((pos+1) ==  item_id)
+                            {
+                                deviceName.add("" + name);
+                            }
+                        }
 
-                        own.add(x);
-                        //technicianPic=((int) own.get(i).getImage());
+
+                        if(a==1) {
+
+                            int item_id = list.get(i).getItem_id();
+                            if (item_id >= 6 && item_id <= 10) {
+                                int temp1 = item_id;
+
+                                if ((pos + 6) == temp1) {
+                                    deviceName.add("" + name);
+                                }
+
+
+                            }
+                        }
+                        if(a==2) {
+
+                            int item_id = list.get(i).getItem_id();
+                            if (item_id >= 11 && item_id <= 15) {
+                                int temp1 = item_id;
+
+                                if ((pos + 11) == temp1) {
+                                    deviceName.add("" + name);
+                                }
+
+
+                            }
+                        }
+
+
 
                     }
 
-                    Toast.makeText(DeviceDetails.this, "connection successfull", Toast.LENGTH_SHORT).show();
-                    Log.d("MTAG", "onResponse: is successfully: " + response.body());
-
-
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(DeviceDetails.this,
+                            android.R.layout.simple_spinner_item, deviceName);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(dataAdapter);
                 }
-
             }
 
             @Override
@@ -299,10 +332,23 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
                 Log.d("MTAG", "No Internet Connection " + t.getLocalizedMessage());
                 Toast.makeText(DeviceDetails.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
 
 
-        if (a == 0) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*if (a == 0) {
             // tvName.setText("Select Mobile Name");
             if (i == 0) {
                 deviceName.add("GALAXY S Series");
@@ -365,7 +411,7 @@ public class DeviceDetails extends Activity implements AdapterView.OnItemSelecte
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(dataAdapter);
 
-
+*/
     }
 
 
