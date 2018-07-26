@@ -115,15 +115,21 @@ public class Cart extends AppCompatActivity {
                             dDate = dialog.findViewById(R.id.Date);
                             Toast.makeText(Cart.this, ""+itemName.getText().toString(), Toast.LENGTH_SHORT).show();
                             Toast.makeText(Cart.this, "Date: "+date1+"\nTime: "+time1, Toast.LENGTH_SHORT).show();
+
                             BookService bookService = new BookService("" + itemName.getText().toString(),
                                     "" + brandName.getText().toString(), "" + fault.getText().toString(),
-                                    (technician_id),
+                                    "Umar Farooq","03104187789","Awan Town",
+                                    "https://image.ibb.co/k1AveJ/pic5.jpg",
+                                    ""+dDate.getText().toString(),
                                     "" + Time.getText().toString(),
-                                    "" + dDate.getText().toString());
+                                    (technician_id) );
 
-                      /*  BookService bookService= new BookService("iphone","8S"
-                                ,"Screen broken",1,
-                                "11:12:12","2018-02-11");*/
+
+                            /*BookService bookService=new BookService("HUAWEII","mate 9","touch",
+                                    "Fahad","03104199255","Marghzar",
+                                    "https://image.ibb.co/k1AveJ/pic5.jpg","2018-02-10",
+                                    "10:10:11",1);*/
+
 
 
                             RetrofitClient apiInterface = GetRetrofit.getInstance().create(RetrofitClient.class);

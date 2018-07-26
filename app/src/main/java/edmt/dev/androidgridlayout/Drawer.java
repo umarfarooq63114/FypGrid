@@ -1,22 +1,21 @@
 package edmt.dev.androidgridlayout;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -35,13 +34,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.pusher.client.Pusher;
+import com.pusher.client.PusherOptions;
+import com.pusher.client.channel.Channel;
+import com.pusher.client.channel.SubscriptionEventListener;
 import com.squareup.picasso.Picasso;
 
 import edmt.dev.androidgridlayout.Activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import edmt.dev.androidgridlayout.Model.Category;
 import edmt.dev.androidgridlayout.Model.Customer;
@@ -164,6 +167,87 @@ public class Drawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+
+
+
+
+
+
+        PusherOptions options = new PusherOptions();
+        options.setCluster("ap2");
+        Pusher pusher = new Pusher("d994b17cd676131c6cb2", options);
+
+        final Channel channel = pusher.subscribe("sFinder");
+        Log.d("MTAG", "test");
+        channel.bind("info", new SubscriptionEventListener() {
+            @Override
+            public void onEvent(String channelName, String eventName, final String data) {
+                Log.d("MTAG",data);
+                Gson gson = new Gson();
+
+                Notify message = gson.fromJson(data,Notify.class);
+                // Serializing Json to Respective POJO
+
+
+                //notif.add(new Notificaton(noti));
+                Intent i = new Intent(Drawer.this, Feedback.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(Drawer.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Builder notification = new NotificationCompat.Builder(Drawer.this, "Channel1")
+                        .setContentTitle(message.getData().getT_name())
+                        .setContentText("Work Done!")
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
+                        .setSmallIcon(R.drawable.error)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(101, notification.build());
+
+                //EventBus.getDefault().post(new MyClass message);
+                //EventBus.getDefault().post(message);
+
+
+
+
+
+//Notificaton notificaton=new Notificaton();
+                //Toast.makeText(MainActivity.this, "abc: "+noti.getTechnician_id().toString(), Toast.LENGTH_SHORT).show();
+                //Eventbus code for posting data to set in views
+
+
+
+
+
+
+            }
+        });
+
+        pusher.connect();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 

@@ -37,7 +37,7 @@ public class TechnicianDetail extends AppCompatActivity {
     static String name = null,exp,add;
     private String tName,spec;
     String photo;
-    static int technician_id;
+    public static int technician_id;
     Button btnAdd,btnReviews;
     ImageView image;
     TextView tvname,tvphone,tvstatus,tCategory,tExp,address;
