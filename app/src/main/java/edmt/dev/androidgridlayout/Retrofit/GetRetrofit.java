@@ -54,7 +54,7 @@ public class GetRetrofit {
 
             ourInstance = new Retrofit.Builder()
                     .client(okhttp.build())
-                    .baseUrl("http://192.168.0.107/crud/public/api/")
+                    .baseUrl("http://192.168.0.102/crud/public/api/")
                     .addConverterFactory(GsonConverterFactory.create()).build();
         }
 

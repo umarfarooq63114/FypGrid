@@ -2,11 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_sort"
+        android:title="Sorting">
+
+        <menu>
+        <item
+            android:id="@+id/action_asc_sort"
+            android:title="Ascending"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_desc_sort"
+            android:title="Descending"
+            app:showAsAction="never" />
+        </menu>
+
+    </item>
+    <item
         android:id="@+id/action_settings"
-        android:title="Settings"/>
-    <item android:id="@+id/action_search"
-        android:title="Search"
+        android:title="Settings" />
+    <item
+        android:id="@+id/action_search"
         android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="always"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+        android:title="Search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always" />
 </menu>
