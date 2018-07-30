@@ -7,6 +7,8 @@ import java.util.Comparator;
 public class Technician {
     @SerializedName("t_name")
     String t_name;
+    @SerializedName("isReserved")
+     static int isReserved;
     @SerializedName("id")
     int id;
     @SerializedName("cnic")

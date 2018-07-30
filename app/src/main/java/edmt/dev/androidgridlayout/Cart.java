@@ -113,8 +113,8 @@ public class Cart extends AppCompatActivity {
                             technicianName = dialog.findViewById(R.id.technicianName);
                             Time = dialog.findViewById(R.id.Time);
                             dDate = dialog.findViewById(R.id.Date);
-                            Toast.makeText(Cart.this, ""+itemName.getText().toString(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(Cart.this, "Date: "+date1+"\nTime: "+time1, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Cart.this, ""+itemName.getText().toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Cart.this, "Date: "+date1+"\nTime: "+time1, Toast.LENGTH_SHORT).show();
 
                             BookService bookService = new BookService("" + itemName.getText().toString(),
                                     "" + brandName.getText().toString(), "" + fault.getText().toString(),
@@ -139,6 +139,7 @@ public class Cart extends AppCompatActivity {
                                 public void onResponse(Call<BookService> call, Response<BookService> response) {
                                     Toast.makeText(Cart.this, "Request successfully submitted", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
+                                    Technician.isReserved=1;
                                 }
 
                                 @Override

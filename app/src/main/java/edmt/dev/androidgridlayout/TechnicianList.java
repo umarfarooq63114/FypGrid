@@ -108,8 +108,9 @@ public class TechnicianList extends AppCompatActivity {
 
                             for (Technician x : list) {
                                 val = x.getRating();
+
                                 int stat = x.getStatus();
-                                if (stat == 1) {
+                                if (stat == 1 ) {
                                     own.add(x);
                                     //technicianPic=((int) own.get(i).getImage());
                                 }
@@ -160,7 +161,7 @@ public class TechnicianList extends AppCompatActivity {
                     for (Technician x : list) {
                         val = x.getRating();
                         int stat = x.getStatus();
-                        if (stat == 1) {
+                        if (stat == 1 && (Technician.isReserved == 0)) {
                             own.add(x);
                             //technicianPic=((int) own.get(i).getImage());
                         }
@@ -267,7 +268,7 @@ public class TechnicianList extends AppCompatActivity {
             technicianAdapter.notifyDataSetChanged();
 
             return true;
-        } else if (id == R.id.action_settings) {
+        } else if (id == R.id.action_setting) {
             Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
 
             return true;

@@ -55,6 +55,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static edmt.dev.androidgridlayout.Fragments.Login_Fragment.UsergetEmailId;
+import static edmt.dev.androidgridlayout.Technician.isReserved;
 
 public class Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -188,23 +189,25 @@ public class Drawer extends AppCompatActivity
             public void onEvent(String channelName, String eventName, final String data) {
                 Log.d("MTAG",data);
                 Gson gson = new Gson();
+if(isReserved == 1) {
+    Notify message = gson.fromJson(data, Notify.class);
+    // Serializing Json to Respective POJO
 
-                Notify message = gson.fromJson(data,Notify.class);
-                // Serializing Json to Respective POJO
 
-
-                //notif.add(new Notificaton(noti));
-                Intent i = new Intent(Drawer.this, Feedback.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(Drawer.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-                NotificationCompat.Builder notification = new NotificationCompat.Builder(Drawer.this, "Channel1")
-                        .setContentTitle(message.getData().getT_name())
-                        .setContentText("Work Done!")
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
-                        .setSmallIcon(R.drawable.error)
-                        .setAutoCancel(true)
-                        .setContentIntent(pendingIntent);
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(101, notification.build());
+    //notif.add(new Notificaton(noti));
+    Intent i = new Intent(Drawer.this, Feedback.class);
+    PendingIntent pendingIntent = PendingIntent.getActivity(Drawer.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+    NotificationCompat.Builder notification = new NotificationCompat.Builder(Drawer.this, "Channel1")
+            .setContentTitle(message.getData().getT_name())
+            .setContentText("Work Done!")
+            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
+            .setSmallIcon(R.drawable.error)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent);
+    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    notificationManager.notify(101, notification.build());
+    isReserved=0;
+}
 
                 //EventBus.getDefault().post(new MyClass message);
                 //EventBus.getDefault().post(message);
@@ -323,7 +326,7 @@ public class Drawer extends AppCompatActivity
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -336,7 +339,7 @@ public class Drawer extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @SuppressLint("ResourceType")
     @SuppressWarnings("StatementWithEmptyBody")
@@ -358,6 +361,18 @@ public class Drawer extends AppCompatActivity
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_share) {
+
+
+
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            String shareBody = "Check it out";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Subject");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+
+
 
         } else if (id == R.id.nav_logout) {
             // If savedinstnacestate is null then replace login fragment
